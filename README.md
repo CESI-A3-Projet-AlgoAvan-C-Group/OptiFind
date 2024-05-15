@@ -35,11 +35,11 @@ Not yet available
 
 ## Contributors
 
-- **El Massi Imad** - [imad-el-massi]
-- **Houille Lukas** - [lukas-houille]
-- **Morel Romain** - [romain-morel]
-- **Ritter Antoine** - [antoine-ritter]
-- **Rouas Léo** - [leo-rouas]
+- **[El Massi Imad](https://github.com/Imad-54)**
+- **[Houille Lukas](https://github.com/lukas-houille)**
+- **[Morel Romain](https://github.com/Roooomain)**
+- **[Ritter Antoine](https://github.com/RitterAntoine)**
+- **[Rouas Léo](https://github.com/Okamizz)**
 
 ## License
 
