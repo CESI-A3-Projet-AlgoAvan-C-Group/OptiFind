@@ -36,11 +36,13 @@ Not yet available
 ## Contributors
 
 - **El Massi Imad** - [imad-el-massi]
-- **Houille lukas** - [lukas-houille]
+- **Houille Lukas** - [lukas-houille]
 - **Morel Romain** - [romain-morel]
 - **Ritter Antoine** - [antoine-ritter]
 - **Rouas Léo** - [leo-rouas]
 
 ## License
 
-This project is licenses under the BSD 3-Clause License - see the [LICENSE.md](LICENSE.md) file for details
+This software is the collective property of El Massi Imad, Houille Lukas, Morel Romain, Ritter Antoine, and Rouas Léo. It is strictly prohibited to copy, modify, distribute, or use this software without the explicit permission of all members of the group.
+
+All rights reserved.
