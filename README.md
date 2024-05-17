@@ -25,6 +25,7 @@ The project is organized in several folders:
 - [`frontend`](frontend/): Contains the frontend part of the project.
 - [`tools`](tools/): Contains the tools to generate VRP instances, to test the algorithm and to compare the results with other algorithms.
 - [`tests`](tests/): Contains the unit tests of the project.
+- [`reports`](reports/): Contains all the reports that we have to submit to our school in Jupyter Notebook format.
 
 ## Installation
 
