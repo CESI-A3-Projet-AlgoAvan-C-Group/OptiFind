@@ -21,11 +21,12 @@ The project is composed of a Frontend part and a Backend part. The Frontend is a
 
 The project is organized in several folders:
 
+- [`assets`](assets/): Contains the assets of the project (images, videos, etc.).
 - [`backend`](backend/): Contains the backend part of the project.
 - [`frontend`](frontend/): Contains the frontend part of the project.
-- [`tools`](tools/): Contains the tools to generate VRP instances, to test the algorithm and to compare the results with other algorithms.
-- [`tests`](tests/): Contains the unit tests of the project.
 - [`reports`](reports/): Contains all the reports that we have to submit to our school in Jupyter Notebook format.
+- [`tests`](tests/): Contains the unit tests of the project.
+- [`tools`](tools/): Contains the tools to generate VRP instances, to test the algorithm and to compare the results with other algorithms.
 
 ## Installation
 
