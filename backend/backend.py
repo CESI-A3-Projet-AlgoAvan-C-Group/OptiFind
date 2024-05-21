@@ -70,4 +70,4 @@ def test_main(input_file_path, output_file_path):
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    test_main('data.geojson', 'route.geojson')
+    test_main('backend/data.geojson', 'backend/route.geojson')
