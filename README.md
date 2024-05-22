@@ -21,18 +21,14 @@ The project is composed of a Frontend part and a Backend part. The Frontend is a
 
 The project is organized in several folders:
 
-- [`assets`](assets/): Contains the assets of the project (images, videos, etc.).
-- [`backend`](backend/): Contains the backend part of the project.
-- [`frontend`](frontend/): Contains the frontend part of the project.
+- [`assets`](assets/): Contains the assets of the project (images, data, etc.).
+- [`OptiFind_app`](OptiFind_app/): Contains the flask application of the project.
 - [`reports`](reports/): Contains all the reports that we have to submit to our school in Jupyter Notebook format.
+- [`src`](src/): Contains the backend part of the project.
 - [`tests`](tests/): Contains the unit tests of the project.
 - [`tools`](tools/): Contains the tools to generate VRP instances, to test the algorithm and to compare the results with other algorithms.
 
 ## Installation
-
-### Requirements
-
-- [Exemple](https://www.exemple.com/) - Exemple
 
 ### Installing
 
@@ -42,6 +38,20 @@ To install the project, you need to follow these steps:
 
 ```bash
 git clone https://github.com/CESI-A3-Projet-AlgoAvan-C-Group/OptiFind.git
+```
+
+### Requirements
+
+To install the project, you need to have the following tools installed on your machine:
+
+- [Python](https://www.python.org/downloads/)
+- [Pip](https://pypi.org/project/pip/)
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+
+You can install the required packages by running the following command:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
