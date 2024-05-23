@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View local GeoJSON</title>
+    <meta property="og:description" content="View local GeoJSON without server upload." />
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.css' />
+    <link rel='stylesheet' href='styles/style.css' />
+    <script src='https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.js'></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<div id="map"></div>
+<input
+    type="file"
+    id="file"
+    name="file"
+    accept="application/geo+json,application/vnd.geo+json,.geojson"
+/>
+<div id="leftPanel">
+<h1>
+    Opti'Find
+</h1>
+</div>
+<button id="resetView" onclick="resetView()">
+    <ion-icon name="refresh"></ion-icon> Reset view
+</button>
+</body>
+<script src='js/map.js'></script>
+</html>
