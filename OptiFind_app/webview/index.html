@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>OptiFind</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.css'/>
+    <link rel='stylesheet' href='css/style.css'/>
+    <script src='https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.js'></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="left-panel" class="left-panel">
+    <h1>
+        Opti'Find
+    </h1>
+    <div class="container-title">
+        <h2 class="mode-text">
+            Search
+        </h2>
+        <ion-icon name="chevron-up" class="ico ico-panel-hide" id="ico-panel-hide"></ion-icon>
+    </div>
+    <div class="container-search" id="container-search">
+        <div class="search-type-selection">
+            <button class="btn-type-selection-left">
+                <span class="btn-text">Manual</span>
+            </button>
+            <button class="btn-type-selection-right">
+                <span class="btn-text">Assisted</span>
+            </button>
+        </div>
+        <div class="experiment-selection">
+            <h3>
+                Start city
+            </h3>
+            <input type="search" name="start city" placeholder="Enter the name of the city">
+        </div>
+        <div class="experiment-selection">
+            <div class="experiment-title-ico">
+                <h3>
+                    Trucks
+                </h3>
+                <ion-icon name="add-circle" id="ico-add-truck-group" class="ico experiment-ico"></ion-icon>
+            </div>
+
+            <div class="experiments" id="truck-container">
+            </div>
+        </div>
+        <div class="experiment-selection">
+            <div class="experiment-title-ico">
+                <h3>
+                    Packages
+                </h3>
+                <ion-icon name="add-circle" id="ico-add-package-group" class="ico experiment-ico"></ion-icon>
+            </div>
+            <div class="experiments" id="package-container">
+            </div>
+        </div>
+        <button id="btn-search-start" class="btn-search-start" onclick="searchPaths()">
+            <ion-icon name="search" class="ico reset-view"></ion-icon>
+            <span class="btn-text">Search</span>
+        </button>
+    </div>
+</div>
+
+<div id="popup" class="popup">
+    <div id="pop-up-content" class="pop-up-content" onsubmit="createGroup()">
+        <h1>
+            Truck group
+        </h1>
+        <div class="pop-up-entry">
+            <h4>
+                Group name
+            </h4>
+            <input type="search" name="group name" id="group-name" placeholder="Enter the name of the group" pattern="[a-z]{1,6}" title="Please enter only lowercase letters and up to 6 characters">
+        </div>
+        <div class="pop-up-entry">
+            <h4>
+                Quantity
+            </h4>
+            <input type="search" name="group quantity" id="group-quantity" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+        </div>
+        <div class="pop-up-entry">
+            <h4>
+                Volume (m³)
+            </h4>
+            <input type="search" name="group volume" id="group-volume" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+        </div>
+        <div class="pop-up-entry">
+            <h4>
+                Weight (kg)
+            </h4>
+            <input type="search" name="group weight" id="group-weight" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+        </div>
+        <div class="pop-up-actions">
+            <button id="btn-delete-group" class="btn-delete-group" onclick="deleteGroup()">
+                <ion-icon name="trash" class="ico reset-view"></ion-icon>
+                <span class="btn-text">Delete</span>
+            </button>
+            <button id="btn-cancel-group" class="btn-delete-group" onclick="cancelGroup()">
+                <ion-icon name="close" class="ico reset-view"></ion-icon>
+                <span class="btn-text">Cancel</span>
+            </button>
+            <button id="btn-create-group" class="btn-create-group" onclick="createGroup()">
+                <ion-icon name="add" class="ico reset-view"></ion-icon>
+                <span class="btn-text">Create</span>
+            </button>
+            <button id="btn-update-group" class="btn-create-group" onclick="updateGroup()">
+                <ion-icon name="checkmark" class="ico reset-view"></ion-icon>
+                <span class="btn-text">Update</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<button id="btn-reset-view" class="btn-reset-view" onclick="resetView()">
+    <ion-icon name="refresh" class="ico reset-view"></ion-icon>
+    <span class="btn-text">Reset view</span>
+</button>
+</body>
+<script src='js/map.js'></script>
+<script src='js/animations.js'></script>
+<script src='js/databaseManagement.js'></script>
+<script src='js/groupsHandling.js'></script>
+</html>

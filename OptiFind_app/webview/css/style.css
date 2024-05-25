@@ -1,0 +1,324 @@
+@font-face {
+    font-family: 'Nohemi';
+    src: url('../assets/Nohemi.ttf') format('truetype');
+}
+
+:root{
+    --clr-primary: #526D82;
+    --clr-dk: #27374D;
+    --clr-lt: #DDE6ED;
+    --clr-secondary: #9DB2BF;
+    --clr-white: #FFFFFF;
+
+    --clr-bg-lt: var(--clr-lt);
+    --clr-bg-dk: var(--clr-dk);
+    --clr-ft-dk: var(--clr-dk);
+    --clr-ft-lt: var(--clr-lt);
+    --clr-btn-lt: var(--clr-lt);
+    --clr-btn-primary: var(--clr-primary);
+    --clr-btn-secondary: var(--clr-secondary);
+    --clr-srch-sct-bg: var(--clr-white);
+
+    --font-family-primary: "Nohemi";
+
+    --fs-h1: 36px;
+    --fs-h2: 28px;
+    --fs-h3: 24px;
+    --fs-h4: 18px;
+    --fs-body: 18px;
+    --fs-small: 16px;
+
+    --fw-h1: 900;
+    --fw-h2: 800;
+    --fw-h3: 700;
+    --fw-h4: 600;
+    --fw-body: 400;
+    --fw-small: 400;
+
+    --border-radius-btn: 8px;
+    --border-radius-bg: 24px;
+
+    transition: all 0.5s ease-out;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, p, h6{
+    font-family: var(--font-family-primary), sans-serif;
+    color: var(--clr-ft-dk);
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+h1{
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-h1);
+    align-self: center;
+}
+h2{
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-h2);
+}
+h3{
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-h3);
+}
+h4{
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-h4);
+}
+p{
+    font-size: var(--fs-body);
+    font-weight: var(--fw-body);
+    white-space: nowrap;
+    overflow: hidden;
+}
+h6{
+    font-size: var(--fs-small);
+    font-weight: var(--fw-small);
+}
+
+html, body, #map {
+    height: 100%;
+}
+
+button{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    gap: 8px;
+    border-radius: var(--border-radius-btn);
+    border: 0;
+    background: var(--clr-btn-primary);
+    color: var(--clr-ft-lt);
+}
+button:hover{
+    filter: brightness(80%);
+    cursor: pointer;
+}
+button:active{
+    filter: brightness(50%);
+}
+
+input{
+    display: flex;
+    background: var(--clr-white);
+    border: none;
+    border-radius: var(--border-radius-btn);
+    align-self: stretch;
+    height: calc(var(--fs-body)*2);
+    font-family: var(--font-family-primary),sans-serif;
+    font-weight: var(--fw-body);
+    font-size: var(--fs-body);
+    padding-left: 8px;
+}
+
+.ico{
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    height: 24px;
+    width: 24px;
+}
+
+.ico-panel-hide:hover{
+    cursor: pointer;
+    color: var(--clr-ft-dk);
+}
+
+.container-search{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    gap: 16px;
+}
+
+.container-title{
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    justify-content: space-between;
+    margin: 16px 0 16px 0;
+}
+
+.btn-text{
+    font-family: var(--font-family-primary), sans-serif;
+    font-size: var(--fs-body);
+    font-weight: var(--fw-body);
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+
+.txt-gp-title{
+    font-weight: 600;
+}
+
+.experiment-title-ico{
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    justify-content: space-between;
+    color: var(--clr-ft-dk);
+}
+
+.experiment-ico:hover{
+    cursor: pointer;
+}
+
+.experiment-selection{
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.experiments{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    align-items: flex-start;
+    max-height: 132px;
+    gap: 8px;
+}
+
+.experiment{
+    padding: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 68px;
+    background: var(--clr-white);
+    flex-shrink: 0;
+    height: 68px;
+}
+
+.experiment-txt{
+    pointer-events: none;
+}
+
+.experiment:hover{
+    cursor: pointer;
+    filter: brightness(80%);
+}
+
+#file {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+.left-panel {
+    display: flex;
+    flex-wrap: wrap;
+    width: 332px;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background-color: var(--clr-bg-lt);
+    border-radius: 16px;
+}
+
+.search-type-selection{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: stretch;
+    gap: 2px;
+}
+
+.btn-reset-view {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--clr-btn-lt);
+    color: var(--clr-ft-dk);
+}
+
+.btn-type-selection-left{
+    display: block;
+    width: 100%;
+    align-content: center;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    background: var(--clr-btn-primary);
+    color: var(--clr-ft-lt);
+}
+.btn-type-selection-right{
+    display: block;
+    width: 100%;
+    align-content: center;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background: var(--clr-btn-secondary);
+    color: var(--clr-ft-lt);
+}
+
+.popup{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(32px);
+    gap: 32px;
+    z-index: 99;
+}
+
+.pop-up-content{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    background: var(--clr-bg-lt);
+    border-radius: var(--border-radius-bg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+}
+
+.pop-up-entry{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.pop-up-actions{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-delete-group{
+    background: var(--clr-btn-secondary);
+    color: var(--clr-ft-lt);
+}
+
+.btn-delete-group:hover{
+    background: #D0342C;
+    cursor: pointer;
+}
