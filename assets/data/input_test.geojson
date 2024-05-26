@@ -60,6 +60,486 @@
         "city": "Strasbourg",
         "isStartingPoint": false
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.0586, 50.6292]
+      },
+      "properties": {
+        "deliveryPointId": "6",
+        "city": "Lille",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.0142, 47.322]
+      },
+      "properties": {
+        "deliveryPointId": "7",
+        "city": "Dijon",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.4442, 43.6047]
+      },
+      "properties": {
+        "deliveryPointId": "8",
+        "city": "Toulouse",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.6778, 48.1173]
+      },
+      "properties": {
+        "deliveryPointId": "9",
+        "city": "Rennes",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.0215, 49.2583]
+      },
+      "properties": {
+        "deliveryPointId": "10",
+        "city": "Reims",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.5536, 47.2184]
+      },
+      "properties": {
+        "deliveryPointId": "11",
+        "city": "Nantes",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.475, 43.5297]
+      },
+      "properties": {
+        "deliveryPointId": "12",
+        "city": "Montpellier",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.8357, 44.9287]
+      },
+      "properties": {
+        "deliveryPointId": "13",
+        "city": "Valence",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.2692, 43.7102]
+      },
+      "properties": {
+        "deliveryPointId": "14",
+        "city": "Nice",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.1278, 49.4432]
+      },
+      "properties": {
+        "deliveryPointId": "15",
+        "city": "Le Havre",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.087, 45.7772]
+      },
+      "properties": {
+        "deliveryPointId": "16",
+        "city": "Clermont-Ferrand",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.4477, 48.8416]
+      },
+      "properties": {
+        "deliveryPointId": "17",
+        "city": "Créteil",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.0226, 44.558]
+      },
+      "properties": {
+        "deliveryPointId": "18",
+        "city": "Gap",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.8473, 45.9237]
+      },
+      "properties": {
+        "deliveryPointId": "19",
+        "city": "Annecy",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.0347, 49.2311]
+      },
+      "properties": {
+        "deliveryPointId": "20",
+        "city": "Charleville-Mézières",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.4437, 43.6043]
+      },
+      "properties": {
+        "deliveryPointId": "21",
+        "city": "Blagnac",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.3956, 49.1829]
+      },
+      "properties": {
+        "deliveryPointId": "22",
+        "city": "Caen",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.8289, 45.764]
+      },
+      "properties": {
+        "deliveryPointId": "23",
+        "city": "Villeurbanne",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.0586, 50.6366]
+      },
+      "properties": {
+        "deliveryPointId": "24",
+        "city": "Roubaix",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3333, 48.9]
+      },
+      "properties": {
+        "deliveryPointId": "25",
+        "city": "Saint-Denis",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.1972, 49.0413]
+      },
+      "properties": {
+        "deliveryPointId": "26",
+        "city": "Cergy",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.4027, 44.7387]
+      },
+      "properties": {
+        "deliveryPointId": "27",
+        "city": "Montélimar",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.3793, 43.6045]
+      },
+      "properties": {
+        "deliveryPointId": "28",
+        "city": "Muret",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.4176, 43.6095]
+      },
+      "properties": {
+        "deliveryPointId": "29",
+        "city": "Colomiers",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.4467, 43.6647]
+      },
+      "properties": {
+        "deliveryPointId": "30",
+        "city": "Tournefeuille",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.4456, 43.5684]
+      },
+      "properties": {
+        "deliveryPointId": "31",
+        "city": "Ramonville-Saint-Agne",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.2672, 43.5427]
+      },
+      "properties": {
+        "deliveryPointId": "32",
+        "city": "Plaisance-du-Touch",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.329, 48.7752]
+      },
+      "properties": {
+        "deliveryPointId": "33",
+        "city": "Antony",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.4404, 48.7881]
+      },
+      "properties": {
+        "deliveryPointId": "34",
+        "city": "Romainville",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.438, 48.815]
+      },
+      "properties": {
+        "deliveryPointId": "35",
+        "city": "Bagnolet",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2633, 48.82]
+      },
+      "properties": {
+        "deliveryPointId": "36",
+        "city": "Issy-les-Moulineaux",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2433, 48.8176]
+      },
+      "properties": {
+        "deliveryPointId": "37",
+        "city": "Vanves",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2513, 48.827]
+      },
+      "properties": {
+        "deliveryPointId": "38",
+        "city": "Montrouge",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2769, 48.8111]
+      },
+      "properties": {
+        "deliveryPointId": "39",
+        "city": "Malakoff",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3056, 48.8103]
+      },
+      "properties": {
+        "deliveryPointId": "40",
+        "city": "Arcueil",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3146, 48.7962]
+      },
+      "properties": {
+        "deliveryPointId": "41",
+        "city": "Gentilly",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.382, 48.8058]
+      },
+      "properties": {
+        "deliveryPointId": "42",
+        "city": "Le Kremlin-Bicêtre",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3993, 48.8031]
+      },
+      "properties": {
+        "deliveryPointId": "43",
+        "city": "Ivry-sur-Seine",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.374, 48.7935]
+      },
+      "properties": {
+        "deliveryPointId": "44",
+        "city": "Vitry-sur-Seine",
+        "isStartingPoint": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.374, 48.8103]
+      },
+      "properties": {
+        "deliveryPointId": "45",
+        "city": "Villejuif",
+        "isStartingPoint": false
+      }
     }
   ]
 }
