@@ -47,7 +47,7 @@ class DeliveryCluster:
         def reorder_path(path, start_delivery):
             """Reorder the path so that it starts from the start_delivery."""
             start_index = path.index(start_delivery)
-            return path[start_index:] + path[:start_index]
+            return path[start_index:] + path[:start_index] + [start_delivery]
 
         clusters = [[delivery] for delivery in self.cities]
 
