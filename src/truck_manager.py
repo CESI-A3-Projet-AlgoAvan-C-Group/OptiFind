@@ -1,21 +1,24 @@
-def first_fit(package_weights, vehicle_capacities):
+def best_fit_decreasing(package_weights, vehicle_capacities):
 
-    remaining_capacities = vehicle_capacities[:]
-    # [:] permet de faire une copie superficielle
+    sorted_weights = sorted(package_weights, reverse=True)
+    remaining_capacities = vehicle_capacities[:] # [:] permet de faire une copie superficielle
     vehicles = [[] for _ in vehicle_capacities]
-    # permet de creer une liste contenant une liste de vehicules ou les colis seront stockés
+    packages_left = []
 
-    for weight in package_weights:
-        placed = False
+    for weight in sorted_weights:
+        best_fit_index = -1
+        min_space_left = float('inf')
+
         for i in range(len(remaining_capacities)):
-            if remaining_capacities[i] >= weight:
-                vehicles[i].append(weight)
-                remaining_capacities[i] -= weight
-                placed = True
-                break
+            if remaining_capacities[i] >= weight and remaining_capacities[i] - weight < min_space_left:
+                best_fit_index = i
+                min_space_left = remaining_capacities[i] - weight
 
-        if not placed:
-            print(f"Erreur: Aucun véhicule ne peut contenir le colis ce colis de ({weight})")
-            return None
+        if best_fit_index == -1:
+            packages_left.append(weight)
+            break
 
-    return vehicles
+        vehicles[best_fit_index].append(weight)
+        remaining_capacities[best_fit_index] -= weight
+
+    return vehicles, packages_left
