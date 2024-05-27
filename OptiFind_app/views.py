@@ -19,5 +19,6 @@ from flask import Flask, request
 @app.route('/get_paths', methods=['POST'])
 def handle_json():
     data = request.json # data from the client
+    print(data)
     with open('../assets/data/route.geojson', 'r') as outfile:
         return outfile.read() # return the data to the client

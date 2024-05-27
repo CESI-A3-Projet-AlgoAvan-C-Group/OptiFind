@@ -3,6 +3,16 @@ document
     .getElementById('file')
     .addEventListener('change', handleFileSelect, false);
 
+document.getElementById('delete-file').addEventListener('click', () => {
+    if (map.getSource('uploaded-source')) {
+        map.removeLayer('uploaded-points');
+        map.removeSource('uploaded-source');
+        document.getElementById('delete-file').style.color = '#DDE6ED';
+    }
+    // reset the input
+    document.getElementById('file').value = '';
+});
+
 const map = new maplibregl.Map({
     container: 'map',
     style: '../assets/mapstyle2.json',
@@ -11,24 +21,6 @@ const map = new maplibregl.Map({
     zoom: 5.4,
     antialias: true
 })
-
-function getPaths(truckGroups, packageGroups) {
-    fetch('/get_paths', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            truckGroups,
-            packageGroups,
-            mapData: map.getSource('uploaded-source')._data
-        })
-    }).then(response => response.json())
-        .then(data => {
-            showPaths(data);
-        }
-        );
-}
 
 map.on('load', () => {
     // Insert the layer beneath any symbol layer.
@@ -89,6 +81,10 @@ function handleFileSelect(evt) {
         // Parse as (geo)JSON
         const geoJSONcontent = JSON.parse(theFile.target.result);
 
+        if (map.getSource('uploaded-source')) {
+            map.removeLayer('uploaded-points');
+            map.removeSource('uploaded-source');
+        }
         // Add as source to the map
         map.addSource('uploaded-source', {
             'type': 'geojson',
@@ -112,6 +108,7 @@ function handleFileSelect(evt) {
 
     // Read the GeoJSON as text
     reader.readAsText(file, 'UTF-8');
+    document.getElementById('delete-file').style.color = '#27374D';
 }
 
 function resetView() {

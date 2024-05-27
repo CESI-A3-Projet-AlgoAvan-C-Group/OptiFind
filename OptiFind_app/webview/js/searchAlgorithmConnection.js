@@ -5,12 +5,34 @@ function searchRequest() {
         let packageGroups = getGroups('packageGroups');
 
         // send request to flask search algorithm
-        getPaths(truckGroups, packageGroups);
-
+        getPaths('manual',truckGroups, packageGroups);
+    } else {
+        // send request to flask search algorithm
+        getPaths('assisted');
     }
 }
 
+function getPaths(searchMode,truckGroups, packageGroups) {
+    fetch('/get_paths', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            truckGroups,
+            packageGroups,
+            mapData: map.getSource('uploaded-source')._data
+        })
+    }).then(response => response.json())
+        .then(data => {
+            showPaths(data);
+        }
+        );
+}
+
 function backToSearch() {
+    map.removeLayer('uploaded-paths');
+    map.removeSource('python-source');
     changeToSearch();
 }
 
