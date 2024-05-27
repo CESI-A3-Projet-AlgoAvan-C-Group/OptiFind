@@ -20,10 +20,11 @@ class Vehicle:
             self.remaining_volume += package.volume
 
 class Package:
-    def __init__(self, package_id, weight, volume):
+    def __init__(self, package_id, weight, volume, coordinate):
         self.id = package_id
         self.weight = weight
         self.volume = volume
+        self.coordinate = coordinate
 
 def best_fit_decreasing(packages, vehicles):
     """
