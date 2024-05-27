@@ -12,3 +12,12 @@ def home(path):
 @app.route("/")
 def index():
     return send_from_directory('webview', 'index.html')
+
+from flask import Flask, request
+# ...
+
+@app.route('/get_paths', methods=['POST'])
+def handle_json():
+    data = request.json # data from the client
+    with open('../assets/data/route.geojson', 'r') as outfile:
+        return outfile.read() # return the data to the client

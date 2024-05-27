@@ -1,14 +1,11 @@
 function searchRequest() {
     changeToResults();
     if (document.cookie.includes('mode=manual')) {
-        let trucks = getGroups('truckGroups');
-        let packages = getGroups('packageGroups');
+        let truckGroups = getGroups('truckGroups');
+        let packageGroups = getGroups('packageGroups');
 
         // send request to flask search algorithm
-
-        // display results
-
-        showPaths();
+        getPaths(truckGroups, packageGroups);
 
     }
 }
