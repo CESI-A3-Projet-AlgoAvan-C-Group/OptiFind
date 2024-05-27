@@ -1,6 +1,6 @@
 import numpy as np
 
-class City:
+class Delivery:
     def __init__(self, name, coordinates, is_start=False):
         self.name = name
         self.coordinates = coordinates

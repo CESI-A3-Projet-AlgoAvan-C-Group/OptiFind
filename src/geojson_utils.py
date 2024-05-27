@@ -1,15 +1,13 @@
 import json
-from city import City
+from delivery import Delivery
 
-def create_geojson(clusters, file_path):
-    """Create a GeoJSON file from the clustered cities' TSP paths."""
+def create_geojson(paths_distances, file_path):
+    """Create a GeoJSON file from the TSP paths."""
     features = []
 
-    for i, cluster in enumerate(clusters):
-        start_city = next(city for city in cluster.cities if city.name == "Paris")
-        path, distance = cluster.tsp_path(start_city)
+    for i, (path, distance) in enumerate(paths_distances):
         if path:
-            coordinates = [city.coordinates for city in path]
+            coordinates = [delivery.coordinates for delivery in path]
             feature = {
                 "type": "Feature",
                 "geometry": {
@@ -38,9 +36,9 @@ def read_geojson(file_path):
         
     cities = []
     for feature in data['features']:
-        name = feature['properties']['city']
+        name = feature['properties']['delivery_address']
         coordinates = feature['geometry']['coordinates']
         is_start = feature['properties']['isStartingPoint']
-        cities.append(City(name, coordinates, is_start))
+        cities.append(Delivery(name, coordinates, is_start))
     
     return cities
