@@ -18,17 +18,17 @@
         Opti'Find
     </h1>
     <div class="container-title">
-        <h2 class="mode-text">
+        <h2 id="mode-text">
             Search
         </h2>
         <ion-icon name="chevron-up" class="ico ico-panel-hide" id="ico-panel-hide"></ion-icon>
     </div>
-    <div class="container-search" id="container-search">
+    <div class="container-settings" id="container-search">
         <div class="search-type-selection">
-            <button class="btn-type-selection-left">
+            <button id="btn-type-selection-left" onclick="changeMode('manual')">
                 <span class="btn-text">Manual</span>
             </button>
-            <button class="btn-type-selection-right">
+            <button id="btn-type-selection-right" onclick="changeMode('assisted')">
                 <span class="btn-text">Assisted</span>
             </button>
         </div>
@@ -38,62 +38,132 @@
             </h3>
             <input type="search" name="start city" placeholder="Enter the name of the city">
         </div>
-        <div class="experiment-selection">
-            <div class="experiment-title-ico">
+        <div id="manual-mode">
+            <div class="experiment-selection">
+                <div class="experiment-title-ico">
+                    <h3>
+                        Trucks
+                    </h3>
+                    <ion-icon name="add-circle" id="ico-add-truck-group" class="ico experiment-ico"></ion-icon>
+                </div>
+
+                <div class="experiments" id="truck-container">
+                </div>
+            </div>
+            <div class="experiment-selection">
+                <div class="experiment-title-ico">
+                    <h3>
+                        Packages
+                    </h3>
+                    <ion-icon name="add-circle" id="ico-add-package-group" class="ico experiment-ico"></ion-icon>
+                </div>
+                <div class="experiments" id="package-container">
+                </div>
+            </div>
+        </div>
+        <div id="assisted-mode" class="assisted-mode">
+            <div class="experiment-selection">
                 <h3>
                     Trucks
                 </h3>
-                <ion-icon name="add-circle" id="ico-add-truck-group" class="ico experiment-ico"></ion-icon>
+                <div class="assisted-entry">
+                    <p>
+                        Quantity
+                    </p>
+                    <input type="search" name="group quantity" class="assisted-input" id="assisted-truck-quantity"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
+                <div class="assisted-entry">
+                    <p>
+                        Max weight (kg)
+                    </p>
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-truck-weight"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
+                <div class="assisted-entry">
+                    <p>
+                        Volume (m³)
+                    </p>
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-truck-volume" placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
             </div>
-
-            <div class="experiments" id="truck-container">
-            </div>
-        </div>
-        <div class="experiment-selection">
-            <div class="experiment-title-ico">
+            <div class="experiment-selection">
                 <h3>
                     Packages
                 </h3>
-                <ion-icon name="add-circle" id="ico-add-package-group" class="ico experiment-ico"></ion-icon>
-            </div>
-            <div class="experiments" id="package-container">
+                <div class="assisted-entry">
+                    <p>
+                        Quantity
+                    </p>
+                    <input type="search" name="group quantity" class="assisted-input" id="assisted-package-quantity"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
+                <div class="assisted-entry">
+                    <p>
+                        Weight (kg)
+                    </p>
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-weight" placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
+                <div class="assisted-entry">
+                    <p>
+                        Volume (m³)
+                    </p>
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-volume" placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                </div>
             </div>
         </div>
-        <button id="btn-search-start" class="btn-search-start" onclick="searchPaths()">
+        <button id="btn-search-start" class="btn-left-panel" onclick="searchRequest()">
             <ion-icon name="search" class="ico reset-view"></ion-icon>
             <span class="btn-text">Search</span>
+        </button>
+    </div>
+    <div class="container-settings" id="container-results">
+        <button id="btn-close-results" class="btn-left-panel" onclick="backToSearch()">
+            <ion-icon name="arrow-back" class="ico reset-view"></ion-icon>
+            <span class="btn-text">Back to search</span>
         </button>
     </div>
 </div>
 
 <div id="popup" class="popup">
     <div id="pop-up-content" class="pop-up-content" onsubmit="createGroup()">
-        <h1>
+        <h1 id="popup-text">
             Truck group
         </h1>
         <div class="pop-up-entry">
             <h4>
                 Group name
             </h4>
-            <input type="search" name="group name" id="group-name" placeholder="Enter the name of the group" pattern="[a-z]{1,6}" title="Please enter only lowercase letters and up to 6 characters">
+            <input type="search" name="group name" id="group-name" placeholder="Enter the name of the group"
+                   pattern="[a-z]{1,6}" title="Please enter only lowercase letters and up to 6 characters">
         </div>
         <div class="pop-up-entry">
             <h4>
                 Quantity
             </h4>
-            <input type="search" name="group quantity" id="group-quantity" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+            <input type="search" name="group quantity" id="group-quantity" placeholder="Enter the name of the group"
+                   pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
         </div>
         <div class="pop-up-entry">
             <h4>
                 Volume (m³)
             </h4>
-            <input type="search" name="group volume" id="group-volume" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+            <input type="search" name="group volume" id="group-volume" placeholder="Enter the name of the group"
+                   pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
         </div>
         <div class="pop-up-entry">
             <h4>
                 Weight (kg)
             </h4>
-            <input type="search" name="group weight" id="group-weight" placeholder="Enter the name of the group" pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
+            <input type="search" name="group weight" id="group-weight" placeholder="Enter the name of the group"
+                   pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
         </div>
         <div class="pop-up-actions">
             <button id="btn-delete-group" class="btn-delete-group" onclick="deleteGroup()">
@@ -125,4 +195,5 @@
 <script src='js/animations.js'></script>
 <script src='js/databaseManagement.js'></script>
 <script src='js/groupsHandling.js'></script>
+<script src='js/searchAlgorithmConnection.js'></script>
 </html>
