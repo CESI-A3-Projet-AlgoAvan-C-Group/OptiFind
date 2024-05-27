@@ -118,15 +118,11 @@ input{
     font-size: var(--fs-body);
     line-height: calc(var(--fs-body) + 4px);
     padding: 8px 16px;
-    align-content: center;
-    align-items: center;
-    margin: 1px;
 }
 
 input:focus{
     outline: none;
-    margin: 0;
-    border: 1px solid var(--clr-primary);
+    box-shadow: 0 0 0 1px var(--clr-primary);
 }
 
 input::placeholder{
@@ -239,9 +235,10 @@ input:hover{
 }
 
 #file {
-        position: absolute;
-        top: 0;
-        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+
     }
 
 .left-panel {
@@ -363,5 +360,8 @@ input:hover{
 
 .assisted-input{
     display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
     width: 180px;
 }

@@ -60,6 +60,15 @@
                 <div class="experiments" id="package-container">
                 </div>
             </div>
+            <div class="experiment-selection">
+                <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept="application/geo+json,application/vnd.geo+json,.geojson"
+                />
+            </div>
+
         </div>
         <div id="assisted-mode" class="assisted-mode">
             <div class="experiment-selection">
@@ -72,7 +81,8 @@
                     </p>
                     <input type="search" name="group quantity" class="assisted-input" id="assisted-truck-quantity"
                            placeholder="n or n,n"
-                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
                 </div>
                 <div class="assisted-entry">
                     <p>
@@ -87,8 +97,10 @@
                     <p>
                         Volume (m³)
                     </p>
-                    <input type="search" name="group volume" class="assisted-input" id="assisted-truck-volume" placeholder="n or n,n"
-                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-truck-volume"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
                 </div>
             </div>
             <div class="experiment-selection">
@@ -101,21 +113,26 @@
                     </p>
                     <input type="search" name="group quantity" class="assisted-input" id="assisted-package-quantity"
                            placeholder="n or n,n"
-                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
                 </div>
                 <div class="assisted-entry">
                     <p>
                         Weight (kg)
                     </p>
-                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-weight" placeholder="n or n,n"
-                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-weight"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
                 </div>
                 <div class="assisted-entry">
                     <p>
                         Volume (m³)
                     </p>
-                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-volume" placeholder="n or n,n"
-                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})" title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
+                    <input type="search" name="group volume" class="assisted-input" id="assisted-package-volume"
+                           placeholder="n or n,n"
+                           pattern="([1-9][0-9]{0,3}|[1-9][0-9]{0,3},[1-9][0-9]{0,3})"
+                           title="Please enter a number between 1 and 9999 or two numbers separated by a comma">
                 </div>
             </div>
         </div>
