@@ -25,9 +25,13 @@ class DeliveryClusterer:
             if not delivery.is_start:  # The starting delivery is already added to all clusters
                 self.clusters[label].cities.append(delivery)
 
-    def solve_paths(self):
-        solution = self.solve_antoine()
-        return solution
+    def solve_paths(self, algorithm):
+        if algorithm == "tsp":
+            return self.solve_tsp()
+        elif algorithm == "antoine":
+            return self.solve_antoine()
+        else:
+            raise ValueError(f"Invalid algorithm: {algorithm}")
 
     def solve_tsp(self):
         """Solve the TSP for each cluster and return the paths and distances."""
