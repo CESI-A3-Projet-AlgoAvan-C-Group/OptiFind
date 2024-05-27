@@ -9,7 +9,7 @@
       },
       "properties": {
         "deliveryPointId": "1",
-        "city": "Paris",
+        "delivery_address": "Paris",
         "isStartingPoint": true
       }
     },
@@ -21,7 +21,7 @@
       },
       "properties": {
         "deliveryPointId": "2",
-        "city": "Lyon",
+        "delivery_address": "Lyon",
         "isStartingPoint": false
       }
     },
@@ -33,7 +33,7 @@
       },
       "properties": {
         "deliveryPointId": "3",
-        "city": "Marseille",
+        "delivery_address": "Marseille",
         "isStartingPoint": false
       }
     },
@@ -45,7 +45,7 @@
       },
       "properties": {
         "deliveryPointId": "4",
-        "city": "Bordeaux",
+        "delivery_address": "Bordeaux",
         "isStartingPoint": false
       }
     },
@@ -57,7 +57,7 @@
       },
       "properties": {
         "deliveryPointId": "5",
-        "city": "Strasbourg",
+        "delivery_address": "Strasbourg",
         "isStartingPoint": false
       }
     },
@@ -69,7 +69,7 @@
       },
       "properties": {
         "deliveryPointId": "6",
-        "city": "Lille",
+        "delivery_address": "Lille",
         "isStartingPoint": false
       }
     },
@@ -81,7 +81,7 @@
       },
       "properties": {
         "deliveryPointId": "7",
-        "city": "Dijon",
+        "delivery_address": "Dijon",
         "isStartingPoint": false
       }
     },
@@ -93,7 +93,7 @@
       },
       "properties": {
         "deliveryPointId": "8",
-        "city": "Toulouse",
+        "delivery_address": "Toulouse",
         "isStartingPoint": false
       }
     },
@@ -105,7 +105,7 @@
       },
       "properties": {
         "deliveryPointId": "9",
-        "city": "Rennes",
+        "delivery_address": "Rennes",
         "isStartingPoint": false
       }
     },
@@ -117,7 +117,7 @@
       },
       "properties": {
         "deliveryPointId": "10",
-        "city": "Reims",
+        "delivery_address": "Reims",
         "isStartingPoint": false
       }
     },
@@ -129,7 +129,7 @@
       },
       "properties": {
         "deliveryPointId": "11",
-        "city": "Nantes",
+        "delivery_address": "Nantes",
         "isStartingPoint": false
       }
     },
@@ -141,7 +141,7 @@
       },
       "properties": {
         "deliveryPointId": "12",
-        "city": "Montpellier",
+        "delivery_address": "Montpellier",
         "isStartingPoint": false
       }
     },
@@ -153,7 +153,7 @@
       },
       "properties": {
         "deliveryPointId": "13",
-        "city": "Valence",
+        "delivery_address": "Valence",
         "isStartingPoint": false
       }
     },
@@ -165,7 +165,7 @@
       },
       "properties": {
         "deliveryPointId": "14",
-        "city": "Nice",
+        "delivery_address": "Nice",
         "isStartingPoint": false
       }
     },
@@ -177,7 +177,7 @@
       },
       "properties": {
         "deliveryPointId": "15",
-        "city": "Le Havre",
+        "delivery_address": "Le Havre",
         "isStartingPoint": false
       }
     },
@@ -189,7 +189,7 @@
       },
       "properties": {
         "deliveryPointId": "16",
-        "city": "Clermont-Ferrand",
+        "delivery_address": "Clermont-Ferrand",
         "isStartingPoint": false
       }
     },
@@ -201,7 +201,7 @@
       },
       "properties": {
         "deliveryPointId": "17",
-        "city": "Créteil",
+        "delivery_address": "Créteil",
         "isStartingPoint": false
       }
     },
@@ -213,7 +213,7 @@
       },
       "properties": {
         "deliveryPointId": "18",
-        "city": "Gap",
+        "delivery_address": "Gap",
         "isStartingPoint": false
       }
     },
@@ -225,7 +225,7 @@
       },
       "properties": {
         "deliveryPointId": "19",
-        "city": "Annecy",
+        "delivery_address": "Annecy",
         "isStartingPoint": false
       }
     },
@@ -237,7 +237,7 @@
       },
       "properties": {
         "deliveryPointId": "20",
-        "city": "Charleville-Mézières",
+        "delivery_address": "Charleville-Mézières",
         "isStartingPoint": false
       }
     },
@@ -249,7 +249,7 @@
       },
       "properties": {
         "deliveryPointId": "21",
-        "city": "Blagnac",
+        "delivery_address": "Blagnac",
         "isStartingPoint": false
       }
     },
@@ -261,7 +261,7 @@
       },
       "properties": {
         "deliveryPointId": "22",
-        "city": "Caen",
+        "delivery_address": "Caen",
         "isStartingPoint": false
       }
     },
@@ -273,7 +273,7 @@
       },
       "properties": {
         "deliveryPointId": "23",
-        "city": "Villeurbanne",
+        "delivery_address": "Villeurbanne",
         "isStartingPoint": false
       }
     },
@@ -285,7 +285,7 @@
       },
       "properties": {
         "deliveryPointId": "24",
-        "city": "Roubaix",
+        "delivery_address": "Roubaix",
         "isStartingPoint": false
       }
     },
@@ -297,7 +297,7 @@
       },
       "properties": {
         "deliveryPointId": "25",
-        "city": "Saint-Denis",
+        "delivery_address": "Saint-Denis",
         "isStartingPoint": false
       }
     },
@@ -309,7 +309,7 @@
       },
       "properties": {
         "deliveryPointId": "26",
-        "city": "Cergy",
+        "delivery_address": "Cergy",
         "isStartingPoint": false
       }
     },
@@ -321,7 +321,7 @@
       },
       "properties": {
         "deliveryPointId": "27",
-        "city": "Montélimar",
+        "delivery_address": "Montélimar",
         "isStartingPoint": false
       }
     },
@@ -333,7 +333,7 @@
       },
       "properties": {
         "deliveryPointId": "28",
-        "city": "Muret",
+        "delivery_address": "Muret",
         "isStartingPoint": false
       }
     },
@@ -345,7 +345,7 @@
       },
       "properties": {
         "deliveryPointId": "29",
-        "city": "Colomiers",
+        "delivery_address": "Colomiers",
         "isStartingPoint": false
       }
     },
@@ -357,7 +357,7 @@
       },
       "properties": {
         "deliveryPointId": "30",
-        "city": "Tournefeuille",
+        "delivery_address": "Tournefeuille",
         "isStartingPoint": false
       }
     },
@@ -369,7 +369,7 @@
       },
       "properties": {
         "deliveryPointId": "31",
-        "city": "Ramonville-Saint-Agne",
+        "delivery_address": "Ramonville-Saint-Agne",
         "isStartingPoint": false
       }
     },
@@ -381,7 +381,7 @@
       },
       "properties": {
         "deliveryPointId": "32",
-        "city": "Plaisance-du-Touch",
+        "delivery_address": "Plaisance-du-Touch",
         "isStartingPoint": false
       }
     },
@@ -393,7 +393,7 @@
       },
       "properties": {
         "deliveryPointId": "33",
-        "city": "Antony",
+        "delivery_address": "Antony",
         "isStartingPoint": false
       }
     },
@@ -405,7 +405,7 @@
       },
       "properties": {
         "deliveryPointId": "34",
-        "city": "Romainville",
+        "delivery_address": "Romainville",
         "isStartingPoint": false
       }
     },
@@ -417,7 +417,7 @@
       },
       "properties": {
         "deliveryPointId": "35",
-        "city": "Bagnolet",
+        "delivery_address": "Bagnolet",
         "isStartingPoint": false
       }
     },
@@ -429,7 +429,7 @@
       },
       "properties": {
         "deliveryPointId": "36",
-        "city": "Issy-les-Moulineaux",
+        "delivery_address": "Issy-les-Moulineaux",
         "isStartingPoint": false
       }
     },
@@ -441,7 +441,7 @@
       },
       "properties": {
         "deliveryPointId": "37",
-        "city": "Vanves",
+        "delivery_address": "Vanves",
         "isStartingPoint": false
       }
     },
@@ -453,7 +453,7 @@
       },
       "properties": {
         "deliveryPointId": "38",
-        "city": "Montrouge",
+        "delivery_address": "Montrouge",
         "isStartingPoint": false
       }
     },
@@ -465,7 +465,7 @@
       },
       "properties": {
         "deliveryPointId": "39",
-        "city": "Malakoff",
+        "delivery_address": "Malakoff",
         "isStartingPoint": false
       }
     },
@@ -477,7 +477,7 @@
       },
       "properties": {
         "deliveryPointId": "40",
-        "city": "Arcueil",
+        "delivery_address": "Arcueil",
         "isStartingPoint": false
       }
     },
@@ -489,7 +489,7 @@
       },
       "properties": {
         "deliveryPointId": "41",
-        "city": "Gentilly",
+        "delivery_address": "Gentilly",
         "isStartingPoint": false
       }
     },
@@ -501,7 +501,7 @@
       },
       "properties": {
         "deliveryPointId": "42",
-        "city": "Le Kremlin-Bicêtre",
+        "delivery_address": "Le Kremlin-Bicêtre",
         "isStartingPoint": false
       }
     },
@@ -513,7 +513,7 @@
       },
       "properties": {
         "deliveryPointId": "43",
-        "city": "Ivry-sur-Seine",
+        "delivery_address": "Ivry-sur-Seine",
         "isStartingPoint": false
       }
     },
@@ -525,7 +525,7 @@
       },
       "properties": {
         "deliveryPointId": "44",
-        "city": "Vitry-sur-Seine",
+        "delivery_address": "Vitry-sur-Seine",
         "isStartingPoint": false
       }
     },
@@ -537,7 +537,7 @@
       },
       "properties": {
         "deliveryPointId": "45",
-        "city": "Villejuif",
+        "delivery_address": "Villejuif",
         "isStartingPoint": false
       }
     }
