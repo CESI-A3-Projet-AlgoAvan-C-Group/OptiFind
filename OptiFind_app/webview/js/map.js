@@ -3,6 +3,17 @@ document
     .getElementById('file')
     .addEventListener('change', handleFileSelect, false);
 
+document.getElementById('delete-file').addEventListener('click', () => {
+    if (map.getSource('uploaded-source')) {
+        map.removeLayer('uploaded-points');
+        map.removeSource('uploaded-source');
+        document.getElementById('delete-file').style.color = '#DDE6ED';
+        document.getElementById('package-container').style.display = 'flex';
+    }
+    // reset the input
+    document.getElementById('file').value = '';
+});
+
 const map = new maplibregl.Map({
     container: 'map',
     style: '../assets/mapstyle2.json',
@@ -11,24 +22,6 @@ const map = new maplibregl.Map({
     zoom: 5.4,
     antialias: true
 })
-
-function getPaths(truckGroups, packageGroups) {
-    fetch('/get_paths', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            truckGroups,
-            packageGroups,
-            mapData: map.getSource('uploaded-source')._data
-        })
-    }).then(response => response.json())
-        .then(data => {
-            showPaths(data);
-        }
-        );
-}
 
 map.on('load', () => {
     // Insert the layer beneath any symbol layer.
@@ -41,7 +34,6 @@ map.on('load', () => {
             break;
         }
     }
-
     map.addSource('openmaptiles', {
         url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${MAPTILER_KEY}`,
         type: 'vector',
@@ -55,12 +47,7 @@ map.on('load', () => {
             'type': 'fill-extrusion',
             'minzoom': 15,
             'paint': {
-                'fill-extrusion-color': [
-                    'case',
-                    ['==', ['get', 'type'], 'building'],
-                    'rgb(200, 200, 200)',
-                    'rgb(200, 200, 200)'
-                ],
+                'fill-extrusion-color': ['case', ['==', ['get', 'type'], 'building:part'], '#d3d3d3', '#d3d3d3'],
                 'fill-extrusion-height': [
                     'interpolate',
                     ['linear'],
@@ -73,7 +60,8 @@ map.on('load', () => {
                 'fill-extrusion-base': ['case',
                     ['>=', ['get', 'zoom'], 16],
                     ['get', 'render_min_height'], 0
-                ]
+                ],
+                'fill-extrusion-opacity': 1
             }
         },
         labelLayerId
@@ -89,6 +77,10 @@ function handleFileSelect(evt) {
         // Parse as (geo)JSON
         const geoJSONcontent = JSON.parse(theFile.target.result);
 
+        if (map.getSource('uploaded-source')) {
+            map.removeLayer('uploaded-points');
+            map.removeSource('uploaded-source');
+        }
         // Add as source to the map
         map.addSource('uploaded-source', {
             'type': 'geojson',
@@ -99,19 +91,49 @@ function handleFileSelect(evt) {
             'id': 'uploaded-points',
             'type': 'circle',
             'source': 'uploaded-source',
-            'layout': {},
             'paint': {
-                'circle-radius': 5,
-                'circle-color': '#007cbf'
+                'circle-radius': 2,
+                'circle-color': '#FFD580'
             },
             // or points add more layers with different filters
             'filter': ['==', '$type', 'Point']
         });
 
+        map.on('click', 'uploaded-points', (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const city = e.features[0].properties.city;
+            const id = e.features[0].properties.package_id;
+            const weight = e.features[0].properties.weight;
+            const volume = e.features[0].properties.volume;
+
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`<h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p>`)
+                .addTo(map);
+        });
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'places', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'places', () => {
+            map.getCanvas().style.cursor = '';
+        });
+        document.getElementById('package-container').style.display = 'none';
     };
 
     // Read the GeoJSON as text
     reader.readAsText(file, 'UTF-8');
+    document.getElementById('delete-file').style.color = '#27374D';
 }
 
 function resetView() {
@@ -126,8 +148,8 @@ function resetView() {
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 10, // make the flying slow
-        curve: 1, // change the speed at which it zooms out
+        speed: 7, // make the flying slow
+        curve: 2, // change the speed at which it zooms out
 
         // This can be any easing function: it takes a number between
         // 0 and 1 and returns another number between 0 and 1.
@@ -161,3 +183,4 @@ function showPaths(jsonData) {
         'filter': ['==', '$type', 'LineString']
     });
 }
+
