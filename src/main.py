@@ -11,7 +11,7 @@ import csv
 
 def run_tests(input_file):
     # This function is used to test the code locally
-    cities = read_geojson(input_file)
+    packages = read_geojson(input_file)
 
     with open('results.csv', 'w', newline='') as csvfile:
         fieldnames = ['Number of clusters', 'Average distance (TSP)', 'Max distance (TSP)', 'Average distance (Antoine)', 'Max distance (Antoine)']
@@ -20,9 +20,9 @@ def run_tests(input_file):
         writer.writeheader()
 
         # Test The Delivery distance for both algorithms with different number of clusters
-        for n_clusters in range(2, 8):
-            delivery_clusterer = DeliveryClusterer(cities, n_clusters)
-            delivery_clusterer.cluster_cities()
+        for n_trucks in range(2, 8):
+            delivery_clusterer = DeliveryClusterer(packages, n_trucks)
+            delivery_clusterer.cluster_deliveries()
 
             # Solve TSP for each cluster
             paths_distances_tsp = delivery_clusterer.solve_paths("tsp")
@@ -36,15 +36,15 @@ def run_tests(input_file):
             avg_distance_antoine = sum(distance for _, distance in paths_distances_antoine) / len(paths_distances_antoine)
             max_distance_antoine = max(distance for _, distance in paths_distances_antoine)
 
-            writer.writerow({'Number of clusters': n_clusters, 'Average distance (TSP)': avg_distance_tsp, 'Max distance (TSP)': max_distance_tsp, 'Average distance (Antoine)': avg_distance_antoine, 'Max distance (Antoine)': max_distance_antoine})
+            writer.writerow({'Number of clusters': n_trucks, 'Average distance (TSP)': avg_distance_tsp, 'Max distance (TSP)': max_distance_tsp, 'Average distance (Antoine)': avg_distance_antoine, 'Max distance (Antoine)': max_distance_antoine})
 
-def main(input_file, output_file, n_clusters=5):
-    # Read cities data from GeoJSON file
-    cities = read_geojson(input_file)
+def main(input_file, output_file, n_trucks=5):
+    # Read packages data from GeoJSON file
+    packages = read_geojson(input_file)
 
-    # Cluster the cities
-    delivery_clusterer = DeliveryClusterer(cities, n_clusters)
-    delivery_clusterer.cluster_cities()
+    # Cluster the packages
+    delivery_clusterer = DeliveryClusterer(packages, n_trucks)
+    delivery_clusterer.cluster_deliveries()
 
     # Solve TSP for each cluster
     paths_distances = delivery_clusterer.solve_paths("antoine")
@@ -53,7 +53,7 @@ def main(input_file, output_file, n_clusters=5):
     create_geojson(paths_distances, output_file)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Cluster cities and solve TSP paths, then output to GeoJSON.')
+    parser = argparse.ArgumentParser(description='Cluster packages and solve TSP paths, then output to GeoJSON.')
     parser.add_argument('input_file', type=str, help='Path to the input GeoJSON file')
     parser.add_argument('output_file', type=str, help='Path to the output GeoJSON file')
     parser.add_argument('--clusters', type=int, default=5, help='Number of clusters (default: 5)')

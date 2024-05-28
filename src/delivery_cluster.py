@@ -3,18 +3,18 @@ from ortools.constraint_solver import pywrapcp
 import numpy as np
 from delivery import Delivery
 
-class DeliveryCluster:
-    def __init__(self, cities):
-        self.cities = cities
+class DeliveryPathFinder:
+    def __init__(self, deliveries):
+        self.deliveries = deliveries
 
-    def tsp_path(self, start_delivery):
-        """Solve the TSP problem for the cluster starting from start_delivery using OR-Tools."""
-        manager = pywrapcp.RoutingIndexManager(len(self.cities), 1, self.cities.index(start_delivery))
+    def tsp_path(self, start_point):
+        """Solve the TSP problem for the cluster starting from start_point using OR-Tools."""
+        manager = pywrapcp.RoutingIndexManager(len(self.deliveries), 1, self.deliveries.index(start_point))
         routing = pywrapcp.RoutingModel(manager)
 
         def distance_callback(from_index, to_index):
-            from_delivery = self.cities[manager.IndexToNode(from_index)]
-            to_delivery = self.cities[manager.IndexToNode(to_index)]
+            from_delivery = self.deliveries[manager.IndexToNode(from_index)]
+            to_delivery = self.deliveries[manager.IndexToNode(to_index)]
             return int(self.calculate_distance(from_delivery, to_delivery) * 1000)  # Convert to integer
 
         transit_callback_index = routing.RegisterTransitCallback(distance_callback)
@@ -32,24 +32,24 @@ class DeliveryCluster:
         index = routing.Start(0)
         path = []
         while not routing.IsEnd(index):
-            path.append(self.cities[manager.IndexToNode(index)])
+            path.append(self.deliveries[manager.IndexToNode(index)])
             index = solution.Value(routing.NextVar(index))
-        path.append(self.cities[manager.IndexToNode(index)])  # Return to start delivery
+        path.append(self.deliveries[manager.IndexToNode(index)])  # Return to start delivery
 
         return path, solution.ObjectiveValue() / 1000  # Convert back to float
     
-    def antoine_algorithm(self, start_delivery):
-        """Solve the TSP problem for the cluster starting from start_delivery using Antoine's algorithm."""
+    def antoine_algorithm(self, start_point):
+        """Solve the TSP problem for the cluster starting from start_point using Antoine's algorithm."""
         """This algorithm creates a list of clusters, each containing a single delivery."""
         """It then iteratively merges the two closest endpoints until only one cluster remains."""
         """The result is the path of deliveries in the order they should be visited. So the order is important."""
 
-        def reorder_path(path, start_delivery):
-            """Reorder the path so that it starts from the start_delivery."""
-            start_index = path.index(start_delivery)
-            return path[start_index:] + path[:start_index] + [start_delivery]
+        def reorder_path(path, start_point):
+            """Reorder the path so that it starts from the start_point."""
+            start_index = path.index(start_point)
+            return path[start_index:] + path[:start_index] + [start_point]
 
-        clusters = [[delivery] for delivery in self.cities]
+        clusters = [[delivery] for delivery in self.deliveries]
 
         # Merge the two closest clusters until only one remains
         while len(clusters) > 1:
@@ -86,9 +86,9 @@ class DeliveryCluster:
         for i in range(len(clusters[0]) - 1):
             path_length += self.calculate_distance(clusters[0][i], clusters[0][i + 1])
 
-        return reorder_path(clusters[0], start_delivery), path_length
+        return reorder_path(clusters[0], start_point), path_length
 
     @staticmethod
     def calculate_distance(delivery1, delivery2):
-        """Calculate Euclidean distance between two cities."""
+        """Calculate Euclidean distance between two deliveries."""
         return np.linalg.norm(np.array(delivery1.coordinates) - np.array(delivery2.coordinates))
