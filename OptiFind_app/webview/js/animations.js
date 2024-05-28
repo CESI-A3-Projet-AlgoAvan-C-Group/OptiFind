@@ -5,7 +5,7 @@ let nameUpper = {truck: "Truck", package: "Package"};
 
 function hidePanel() {
     let leftPanel = document.getElementById("left-panel")
-    let containerSearch = document.getElementById("container-"+stepView)
+    let containerSearch = document.getElementById("container-" + stepView)
     let icoHide = document.getElementById("ico-panel-hide")
     if (containerSearch.style.display === "none") {
         containerSearch.style.display = "flex";

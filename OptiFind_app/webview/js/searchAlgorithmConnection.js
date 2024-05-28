@@ -4,10 +4,10 @@ async function searchRequest() {
     let packageGroups = await getGroups('packageGroups');
 
     // send request to flask search algorithm
-    getPaths('manual', truckGroups, packageGroups);
+    getPaths(truckGroups, packageGroups);
 }
 
-function getPaths(searchMode, truckGroups, packageGroups) {
+function getPaths( truckGroups, packageGroups) {
     let mapData = null;
     if ( map.getSource('uploaded-source') ) {
         mapData = map.getSource('uploaded-source')._data;
@@ -18,7 +18,7 @@ function getPaths(searchMode, truckGroups, packageGroups) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            searchMode: searchMode,
+            startCity: document.getElementById('start-city').value,
             truckGroups: truckGroups,
             packageGroups: packageGroups,
             mapData: mapData
