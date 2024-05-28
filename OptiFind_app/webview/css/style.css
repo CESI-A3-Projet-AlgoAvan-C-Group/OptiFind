@@ -208,6 +208,7 @@ input:hover {
     align-self: stretch;
     flex-direction: column;
     gap: 8px;
+    margin-bottom: 16px;
 }
 
 .experiments {
@@ -228,10 +229,11 @@ input:hover {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 68px;
+    width: 80px;
     background: var(--clr-white);
     flex-shrink: 0;
-    height: 68px;
+    height: 80px;
+    justify-content: space-between;
 }
 
 .experiment-txt {
@@ -382,4 +384,31 @@ input:hover {
 
 .ico-delete-file:hover {
     cursor: pointer;
+}
+
+#experiment-input {
+    padding-top: 16px;
+    border-top: 2px solid var(--clr-primary);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--clr-bg-lt);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--clr-secondary);
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-primary);
 }

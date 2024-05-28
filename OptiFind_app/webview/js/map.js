@@ -47,12 +47,7 @@ map.on('load', () => {
             'type': 'fill-extrusion',
             'minzoom': 15,
             'paint': {
-                'fill-extrusion-color': [
-                    'case',
-                    ['==', ['get', 'type'], 'building'],
-                    'rgb(200, 200, 200)',
-                    'rgb(200, 200, 200)'
-                ],
+                'fill-extrusion-color': [ 'case', ['==', ['get', 'type'], 'building:part'], '#d3d3d3', '#d3d3d3' ],
                 'fill-extrusion-height': [
                     'interpolate',
                     ['linear'],
@@ -65,7 +60,8 @@ map.on('load', () => {
                 'fill-extrusion-base': ['case',
                     ['>=', ['get', 'zoom'], 16],
                     ['get', 'render_min_height'], 0
-                ]
+                ],
+                'fill-extrusion-opacity': 1
             }
         },
         labelLayerId
@@ -123,8 +119,8 @@ function resetView() {
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 10, // make the flying slow
-        curve: 1, // change the speed at which it zooms out
+        speed: 7, // make the flying slow
+        curve: 2, // change the speed at which it zooms out
 
         // This can be any easing function: it takes a number between
         // 0 and 1 and returns another number between 0 and 1.
