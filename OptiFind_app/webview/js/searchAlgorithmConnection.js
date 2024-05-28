@@ -1,20 +1,17 @@
 async function searchRequest() {
     changeToResults();
-    if (document.cookie.includes('mode=manual')) {
-        let truckGroups = await getGroups('truckGroups');
-        let packageGroups = await getGroups('packageGroups');
+    let truckGroups = await getGroups('truckGroups');
+    let packageGroups = await getGroups('packageGroups');
 
-        // send request to flask search algorithm
-        getPaths('manual', truckGroups, packageGroups);
-    } else {
-        // send request to flask search algorithm
-        getPaths('assisted');
-    }
+    // send request to flask search algorithm
+    getPaths('manual', truckGroups, packageGroups);
 }
 
 function getPaths(searchMode, truckGroups, packageGroups) {
-    console.log(truckGroups);
-    console.log(packageGroups);
+    let mapData = null;
+    if ( map.getSource('uploaded-source') ) {
+        mapData = map.getSource('uploaded-source')._data;
+    }
     fetch('/get_paths', {
         method: 'POST',
         headers: {
@@ -23,7 +20,8 @@ function getPaths(searchMode, truckGroups, packageGroups) {
         body: JSON.stringify({
             searchMode: searchMode,
             truckGroups: truckGroups,
-            packageGroups: packageGroups
+            packageGroups: packageGroups,
+            mapData: mapData
         })
     }).then(response => response.json())
         .then(data => {

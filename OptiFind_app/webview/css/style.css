@@ -234,6 +234,7 @@ input:hover {
     flex-shrink: 0;
     height: 80px;
     justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .experiment-txt {
