@@ -1,6 +1,5 @@
 from math import radians, sin, cos, sqrt, atan2
 
-
 class Vehicle:
     def __init__(self, vehicle_id, capacity, volume):
         self.id = vehicle_id
@@ -32,12 +31,13 @@ class Vehicle:
 
 
 class Package:
-    def __init__(self, package_id, weight, volume, latitude, longitude):
+    def __init__(self, package_id, weight, volume, latitude, longitude, city):
         self.id = package_id
         self.weight = weight
         self.volume = volume
         self.latitude = latitude
         self.longitude = longitude
+        self.city= city
 
     def calculate_distance(self, reference_position):
         lat1 = radians(self.latitude)
