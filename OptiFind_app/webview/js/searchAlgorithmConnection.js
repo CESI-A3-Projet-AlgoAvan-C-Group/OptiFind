@@ -4,14 +4,38 @@ async function searchRequest() {
     let packageGroups = await getGroups('packageGroups');
 
     // send request to flask search algorithm
-    getPaths(truckGroups, packageGroups);
+    dispatcher(truckGroups, packageGroups);
 }
 
-function getPaths( truckGroups, packageGroups) {
+function dispatcher(truckGroups, packageGroups) {
     let mapData = null;
-    if ( map.getSource('uploaded-source') ) {
+    if (map.getSource('uploaded-source')) {
+        console.log("map.getSource found")
         mapData = map.getSource('uploaded-source')._data;
+        console.log(mapData)
+        getPaths(truckGroups, packageGroups, mapData);
+    } else {
+        console.log("map.getSource not found")
+        fetch('/get_packages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                startCity: document.getElementById('start-city').value,
+                truckGroups: truckGroups,
+                packageGroups: packageGroups,
+                mapData: mapData
+            })
+        }).then(response => response.json())
+        .then(data => {
+            showPackages(data);
+            getPaths(truckGroups, packageGroups ,data);
+        })
     }
+}
+
+function getPaths( truckGroups, packageGroups, mapData) {
     fetch('/get_paths', {
         method: 'POST',
         headers: {

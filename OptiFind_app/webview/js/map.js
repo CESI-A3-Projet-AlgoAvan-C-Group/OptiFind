@@ -162,6 +162,27 @@ function resetView() {
     });
 }
 
+function showPackages(jsonData) {
+    console.log("showPackages")
+    const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+
+    map.addSource('python-source', {
+        'type': 'geojson',
+        'data': geoJSONcontent
+    });
+    map.addLayer({
+        'id': 'uploaded-points',
+        'type': 'circle',
+        'source': 'python-source',
+        'paint': {
+            'circle-radius': 2,
+            'circle-color': '#FFD580'
+        },
+        // or points add more layers with different filters
+        'filter': ['==', '$type', 'Point']
+    });
+}
+
 function showPaths(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
 
