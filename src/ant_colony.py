@@ -18,6 +18,7 @@ def ant_colony(vehicule):
     n_ants = 10
     n_best = 2
     n_iterations = 100
+    elitist_weight = 10
     decay = 0.95
     alpha = 1
     beta = 2
@@ -59,6 +60,11 @@ def ant_colony(vehicule):
             for k in range(n):  # Update the pheromone for the return to the start
                 pheromone[path[k], path[(k + 1) % n]] += 1 / distance
 
+
+        # Elitist update
+        for k in range(n):
+            pheromone[best_path[1][k], best_path[1][(k + 1) % n]] += elitist_weight / best_path[0]
+        
         # Evaporation
         pheromone *= decay
 
