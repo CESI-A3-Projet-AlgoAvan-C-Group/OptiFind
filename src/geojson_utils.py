@@ -1,33 +1,53 @@
 import json
-from delivery import Delivery
 
-def create_geojson(paths_distances, file_path):
-    """Create a GeoJSON file from the TSP paths."""
+def generate_geojson_vehicles(vehicles):
     features = []
-
-    for i, (path, distance) in enumerate(paths_distances):
-        if path:
-            coordinates = [delivery.coordinates for delivery in path]
-            feature = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "LineString",
-                    "coordinates": coordinates
-                },
-                "properties": {
-                    "cluster": i + 1,
-                    "distance": distance
-                }
-            }
-            features.append(feature)
-
-    geojson = {
+    for vehicle in vehicles:
+        line_string = {
+            "type": "LineString",
+            "coordinates": [[package.longitude, package.latitude] for package in vehicle.packages]
+        }
+        feature = {
+            "type": "Feature",
+            "properties": {
+                "id": vehicle.id,
+                "capacity": vehicle.capacity,
+                "remaining_capacity": vehicle.remaining_capacity,
+                "volume": vehicle.volume,
+                "remaining_volume": vehicle.remaining_volume,
+                "packages": [package.id for package in vehicle.packages]
+            },
+            "geometry": line_string
+        }
+        features.append(feature)
+    feature_collection = {
         "type": "FeatureCollection",
         "features": features
     }
+    return json.dumps(feature_collection)
 
-    with open(file_path, 'w') as f:
-        json.dump(geojson, f, indent=2)
+def generate_geojson_vehicle(vehicle):
+    line_string = {
+        "type": "LineString",
+        "coordinates": [[package.longitude, package.latitude] for package in vehicle.packages]
+    }
+    feature = {
+        "type": "Feature",
+        "properties": {
+            "id": vehicle.id,
+            "capacity": vehicle.capacity,
+            "remaining_capacity": vehicle.remaining_capacity,
+            "volume": vehicle.volume,
+            "remaining_volume": vehicle.remaining_volume,
+            "packages": [package.id for package in vehicle.packages]
+        },
+        "geometry": line_string
+    }
+    feature_collection = {
+        "type": "FeatureCollection",
+        "features": [feature]
+    }
+    return json.dumps(feature_collection)
 
 def read_geojson(file_path):
     """Read cities data from a GeoJSON file."""
