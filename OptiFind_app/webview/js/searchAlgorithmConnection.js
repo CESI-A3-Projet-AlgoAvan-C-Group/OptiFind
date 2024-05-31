@@ -55,6 +55,7 @@ function getPaths( truckGroups, packageGroups, mapData) {
 }
 
 function backToSearch() {
+    map.removeLayer('uploaded-points')
     map.removeLayer('uploaded-paths');
     map.removeSource('python-source');
     changeToSearch();
