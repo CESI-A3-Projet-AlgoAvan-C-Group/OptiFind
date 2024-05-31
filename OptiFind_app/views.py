@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask import send_from_directory
 from src.package_handling import *
+from src.package_delivery import *
 
 app = Flask(__name__)
 CORS(app)
@@ -40,5 +41,7 @@ def handle_json():
     packages = extract_packages_for_paths(data['mapData'])
 
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
+
+    vehicles_reorganized = reorganize_vehicles(vehicles_allocated, start_delivery=packages[0])
 
     return data

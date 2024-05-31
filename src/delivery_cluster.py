@@ -44,7 +44,7 @@ class DeliveryCluster:
         """It then iteratively merges the two closest endpoints until only one cluster remains."""
         """The result is the path of deliveries in the order they should be visited. So the order is important."""
 
-        def reorder_path(path, start_delivery):
+        def reorder_(path, start_delivery):
             """Reorder the path so that it starts from the start_delivery."""
             start_index = path.index(start_delivery)
             return path[start_index:] + path[:start_index] + [start_delivery]
@@ -59,10 +59,10 @@ class DeliveryCluster:
 
             for i in range(len(clusters)):
                 for j in range(i + 1, len(clusters)):
-                    case_1 = self.calculate_distance(clusters[i][0], clusters[j][0])
-                    case_2 = self.calculate_distance(clusters[i][-1], clusters[j][0])
-                    case_3 = self.calculate_distance(clusters[i][0], clusters[j][-1])
-                    case_4 = self.calculate_distance(clusters[i][-1], clusters[j][-1])
+                    case_1 = clusters[i][0].calculate_distance(clusters[j][0])
+                    case_2 = clusters[i][-1].calculate_distance(clusters[j][0])
+                    case_3 = clusters[i][0].calculate_distance(clusters[j][-1])
+                    case_4 = clusters[i][-1].calculate_distance(clusters[j][-1])
                     distances = [case_1, case_2, case_3, case_4]
                     for distance in distances:
                         if distance < min_distance:
@@ -82,13 +82,4 @@ class DeliveryCluster:
 
             clusters.pop(j)
 
-        path_length = 0
-        for i in range(len(clusters[0]) - 1):
-            path_length += self.calculate_distance(clusters[0][i], clusters[0][i + 1])
-
-        return reorder_path(clusters[0], start_delivery), path_length
-
-    @staticmethod
-    def calculate_distance(delivery1, delivery2):
-        """Calculate Euclidean distance between two cities."""
-        return np.linalg.norm(np.array(delivery1.coordinates) - np.array(delivery2.coordinates))
+        
