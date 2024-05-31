@@ -218,7 +218,7 @@ input:hover {
     overflow-x: scroll;
     overflow-y: hidden;
     align-items: flex-start;
-    max-height: 132px;
+    max-height: 162px;
     gap: 8px;
 }
 
@@ -229,10 +229,10 @@ input:hover {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 80px;
+    width: 100px;
     background: var(--clr-white);
     flex-shrink: 0;
-    height: 80px;
+    height: 100px;
     justify-content: space-between;
     margin-bottom: 8px;
 }

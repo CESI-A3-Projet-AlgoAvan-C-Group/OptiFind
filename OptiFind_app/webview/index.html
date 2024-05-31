@@ -82,7 +82,7 @@
 </div>
 
 <div id="popup" class="popup">
-    <div id="pop-up-content" class="pop-up-content" onsubmit="createGroup()">
+    <div id="pop-up-content" class="pop-up-content">
         <h1 id="popup-text">
             Truck group
         </h1>
@@ -114,6 +114,15 @@
             <input type="search" name="group weight" id="group-weight" placeholder="Enter the name of the group"
                    pattern="[1-9][0-9]{0,3}" title="Please enter a number between 1 and 9999">
         </div>
+        <div class="pop-up-entry">
+            <h4>
+                Type
+            </h4>
+            <select id="group-truck-type">
+                <option value="classic">classic</option>
+                <option value="refrigirated">refrigirated</option>
+                <option value="chemicals">chemicals</option>
+            </select>
         <div class="pop-up-actions">
             <button id="btn-delete-group" class="btn-delete-group" onclick="deleteGroup()">
                 <ion-icon name="trash" class="ico reset-view"></ion-icon>
