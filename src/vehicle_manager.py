@@ -57,7 +57,7 @@ class Package:
         return distance
 
 
-def calculate_score(package, vehicle, max_distance=500):
+def calculate_score(package, vehicle, max_distance=150):
 
     center_position = vehicle.calculate_packages_center()
     distance = package.calculate_distance(center_position)

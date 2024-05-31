@@ -28,7 +28,8 @@ def ant_colony(vehicule):
     np.fill_diagonal(pheromone, 0)
 
     # Intensities
-    intensity = 1 / distance_matrix
+    epsilon = 1e-10
+    intensity = 1 / (distance_matrix + epsilon)
     intensity[intensity == np.inf] = 0
 
     # Best path
@@ -58,12 +59,14 @@ def ant_colony(vehicule):
             if distance < best_path[0]:
                 best_path = (distance, path)
             for k in range(n):  # Update the pheromone for the return to the start
-                pheromone[path[k], path[(k + 1) % n]] += 1 / distance
+                if distance != 0:
+                    pheromone[path[k], path[(k + 1) % n]] += 1 / distance
 
 
         # Elitist update
         for k in range(n):
-            pheromone[best_path[1][k], best_path[1][(k + 1) % n]] += elitist_weight / best_path[0]
+            if best_path[0] != 0:
+                pheromone[best_path[1][k], best_path[1][(k + 1) % n]] += elitist_weight / best_path[0]
         
         # Evaporation
         pheromone *= decay
