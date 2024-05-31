@@ -205,9 +205,7 @@ function showPackages(jsonData) {
 
 function showPaths(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
-
     // Add as source to the map
-
     map.addLayer({
         'id': 'python-paths-'+layerLineList.length,
         'type': 'line',

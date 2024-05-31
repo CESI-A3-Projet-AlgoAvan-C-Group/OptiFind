@@ -57,7 +57,7 @@ def antoine_algorithm(vehicle, start_delivery):
     vehicle.packages = clusters[0]
 
 def algorithms(algorithm, vehicle, start_delivery):
-    if vehicle.algorithm == "antoine":
+    if algorithm == "antoine":
         antoine_algorithm(vehicle, start_delivery)
     else:
         raise ValueError(f"Invalid algorithm: {algorithm}")

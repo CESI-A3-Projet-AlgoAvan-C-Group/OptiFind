@@ -11,47 +11,54 @@ app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
 
+
 @app.route("/<path:path>")
 def home(path):
     return send_from_directory('webview', path)
+
 
 @app.route("/")
 def index():
     return send_from_directory('webview', 'index.html')
 
-@app.route('/get_packages', methods=['POST'])
+
+@app.route('/get_paths', methods=['POST'])
 def get_packages():
     data = request.json  # data from the client
 
-    packages = extract_packages_with_random_city(data['packageGroups'])
-    features = create_features_from_pkg(packages)
+    if data['mapData'] is None:
+        packages = extract_packages_with_random_city(data['packageGroups'])
+        features = create_features_from_pkg(packages)
 
-    packages_geojson = {
-        "type": "FeatureCollection",
-        "features": features
-    }
+        packages_geojson = {
+            "type": "FeatureCollection",
+            "features": features
+        }
 
-    socketio.emit('newLayerPoints', packages_geojson)
+
+        socketio.emit('newLayerPoints', packages_geojson)
+        data['mapData'] = packages_geojson
+        handle_json(data)
+    else:
+        handle_json(data)
 
     return 'Packages received'
 
 
-@app.route('/get_paths', methods=['POST'])
-def handle_json():
-    data = request.json # data from the client
-
+def handle_json(data):
     vehicles = extract_vehicles(data['truckGroups'])
     packages = extract_packages_for_paths(data['mapData'])
 
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
-
+    print("vehicles_allocated")
     vehicles_reorganized = reorganize_vehicles(vehicles_allocated, start_delivery=packages[0])
-    
+    print("vehicles_reorganized")
     for vehicle in vehicles_reorganized:
         vehicle_geojson = generate_geojson_vehicle(vehicle)
         socketio.emit('newLayerLines', vehicle_geojson)
-
+        print(vehicle_geojson)
     return 'Paths received'
+
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=5000)

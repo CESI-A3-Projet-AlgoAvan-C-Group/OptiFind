@@ -4,7 +4,7 @@ socket.on('newLayerPoints', function (pointsJSON) {
     showPackages(pointsJSON);
 });
 
-socket.on('newLayerLine', function (linesJSON) {
+socket.on('newLayerLines', function (linesJSON) {
     showPaths(linesJSON);
 });
 
@@ -18,26 +18,12 @@ async function searchRequest() {
 }
 
 function dispatcher(truckGroups, packageGroups) {
-    let mapData = null;
     if (map.getSource('file-source')) {
         console.log("map.getSource found")
-        mapData = map.getSource('file-source')._data;
-        console.log(mapData)
-        getPaths(truckGroups, packageGroups, mapData);
+        getPaths(truckGroups, packageGroups, map.getSource('file-source')._data);
     } else {
         console.log("map.getSource not found")
-        fetch('/get_packages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                startCity: document.getElementById('start-city').value,
-                truckGroups: truckGroups,
-                packageGroups: packageGroups,
-                mapData: mapData
-            })
-        })
+        getPaths(truckGroups, packageGroups, null);
     }
 }
 
@@ -57,7 +43,6 @@ function getPaths(truckGroups, packageGroups, mapData) {
 }
 
 function backToSearch() {
-    console.log("map layers", map.getStyle().layers)
     if (map.getSource('file-source')) {
         map.removeLayer('file-points');
         map.removeSource('file-source');
