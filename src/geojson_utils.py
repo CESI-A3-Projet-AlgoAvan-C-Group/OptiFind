@@ -1,7 +1,6 @@
 import json
-from delivery import Delivery
 
-def generate_geojson(vehicles):
+def generate_geojson_vehicles(vehicles):
     features = []
     for vehicle in vehicles:
         line_string = {
@@ -24,6 +23,29 @@ def generate_geojson(vehicles):
     feature_collection = {
         "type": "FeatureCollection",
         "features": features
+    }
+    return json.dumps(feature_collection)
+
+def generate_geojson_vehicle(vehicle):
+    line_string = {
+        "type": "LineString",
+        "coordinates": [[package.longitude, package.latitude] for package in vehicle.packages]
+    }
+    feature = {
+        "type": "Feature",
+        "properties": {
+            "id": vehicle.id,
+            "capacity": vehicle.capacity,
+            "remaining_capacity": vehicle.remaining_capacity,
+            "volume": vehicle.volume,
+            "remaining_volume": vehicle.remaining_volume,
+            "packages": [package.id for package in vehicle.packages]
+        },
+        "geometry": line_string
+    }
+    feature_collection = {
+        "type": "FeatureCollection",
+        "features": [feature]
     }
     return json.dumps(feature_collection)
 
