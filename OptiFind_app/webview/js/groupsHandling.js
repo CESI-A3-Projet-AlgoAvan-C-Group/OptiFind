@@ -1,6 +1,16 @@
 document.getElementById("ico-add-package-group").addEventListener("click", addPackageGroup)
 document.getElementById("ico-add-truck-group").addEventListener("click", addTruckGroup)
 
+var selectedGroup = {
+    dbName: '',
+    type: '',
+    id: '',
+    name: '',
+    quantity: '',
+    volume: '',
+    weight: '',
+}
+
 function loadGroups() {
     let packageContainer = document.getElementById("package-container");
     while (packageContainer.firstChild) {

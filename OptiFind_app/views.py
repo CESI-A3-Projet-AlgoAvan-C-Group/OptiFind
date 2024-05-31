@@ -2,9 +2,12 @@ from flask import Flask
 from flask_cors import CORS
 from flask import send_from_directory
 from src.package_handling import *
+from flask_socketio import SocketIO
+from flask import request
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app)
 
 @app.route("/<path:path>")
 def home(path):
@@ -13,9 +16,6 @@ def home(path):
 @app.route("/")
 def index():
     return send_from_directory('webview', 'index.html')
-
-from flask import Flask, request
-# ...
 
 @app.route('/get_packages', methods=['POST'])
 def get_packages():
@@ -29,7 +29,9 @@ def get_packages():
         "features": features
     }
 
-    return packages_geojson
+    socketio.emit('newLayerPoints', packages_geojson)
+
+    return 'Packages received'
 
 
 @app.route('/get_paths', methods=['POST'])
@@ -41,4 +43,7 @@ def handle_json():
 
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
 
-    return data
+    return 'Paths received'
+
+if __name__ == "__main__":
+    socketio.run(app, host='0.0.0.0', port=5000)

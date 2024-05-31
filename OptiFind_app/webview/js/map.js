@@ -4,9 +4,9 @@ document
     .addEventListener('change', handleFileSelect, false);
 
 document.getElementById('delete-file').addEventListener('click', () => {
-    if (map.getSource('uploaded-source')) {
-        map.removeLayer('uploaded-points');
-        map.removeSource('uploaded-source');
+    if (map.getSource('file-source')) {
+        map.removeLayer('file-points');
+        map.removeSource('file-source');
         document.getElementById('delete-file').style.color = '#DDE6ED';
         document.getElementById('package-container').style.display = 'flex';
     }
@@ -22,6 +22,9 @@ const map = new maplibregl.Map({
     zoom: 5.4,
     antialias: true
 })
+
+let layerPointList = [];
+let layerLineList = [];
 
 map.on('load', () => {
     // Insert the layer beneath any symbol layer.
@@ -77,20 +80,20 @@ function handleFileSelect(evt) {
         // Parse as (geo)JSON
         const geoJSONcontent = JSON.parse(theFile.target.result);
 
-        if (map.getSource('uploaded-source')) {
-            map.removeLayer('uploaded-points');
-            map.removeSource('uploaded-source');
+        if (map.getSource('file-source')) {
+            map.removeLayer('file-points');
+            map.removeSource('file-source');
         }
         // Add as source to the map
-        map.addSource('uploaded-source', {
+        map.addSource('file-source', {
             'type': 'geojson',
             'data': geoJSONcontent
         });
 
         map.addLayer({
-            'id': 'uploaded-points',
+            'id': 'file-points',
             'type': 'circle',
-            'source': 'uploaded-source',
+            'source': 'file-source',
             'paint': {
                 'circle-radius': 2,
                 'circle-color': '#FFD580'
@@ -99,7 +102,7 @@ function handleFileSelect(evt) {
             'filter': ['==', '$type', 'Point']
         });
 
-        map.on('click', 'uploaded-points', (e) => {
+        map.on('click', 'file-points', (e) => {
             const coordinates = e.features[0].geometry.coordinates.slice();
             const city = e.features[0].properties.city;
             const id = e.features[0].properties.package_id;
@@ -164,15 +167,13 @@ function resetView() {
 
 function showPackages(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
-
-    map.addSource('python-source', {
-        'type': 'geojson',
-        'data': geoJSONcontent
-    });
     map.addLayer({
-        'id': 'uploaded-points',
+        'id': 'python-points-'+layerPointList.length,
         'type': 'circle',
-        'source': 'python-source',
+        'source': {
+            'type': 'geojson',
+            'data': geoJSONcontent
+        },
         'paint': {
             'circle-radius': 2,
             'circle-color': '#FFD580'
@@ -180,6 +181,26 @@ function showPackages(jsonData) {
         // or points add more layers with different filters
         'filter': ['==', '$type', 'Point']
     });
+    layerLineList.push('python-points-'+layerPointList.length);
+    map.on('click', 'python-points-'+layerPointList.length, (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const city = e.features[0].properties.city;
+            const id = e.features[0].properties.package_id;
+            const weight = e.features[0].properties.weight;
+            const volume = e.features[0].properties.volume;
+
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`<h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p>`)
+                .addTo(map);
+        });
 }
 
 function showPaths(jsonData) {
@@ -188,9 +209,12 @@ function showPaths(jsonData) {
     // Add as source to the map
 
     map.addLayer({
-        'id': 'uploaded-paths',
+        'id': 'python-paths-'+layerLineList.length,
         'type': 'line',
-        'source': 'python-source',
+        'source': {
+            'type': 'geojson',
+            'data': geoJSONcontent
+        },
         'paint': {
             'line-color': '#ff0000',
             'line-width': 2
@@ -198,5 +222,6 @@ function showPaths(jsonData) {
         // or points add more layers with different filters
         'filter': ['==', '$type', 'LineString']
     });
+    layerLineList.push('python-paths-'+layerLineList.length);
 }
 
