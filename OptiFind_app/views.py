@@ -30,6 +30,7 @@ def index():
 @app.route('/get_paths', methods=['POST'])
 def get_packages():
     data = request.json  # data from the client
+    print(data)
 
     if data['mapData'] is None:
         packages = extract_packages_with_random_city(data['packageGroups'])

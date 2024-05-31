@@ -203,6 +203,15 @@ function showPackages(jsonData) {
         });
 }
 
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function showPaths(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
     // Add as source to the map
@@ -214,7 +223,7 @@ function showPaths(jsonData) {
             'data': geoJSONcontent
         },
         'paint': {
-            'line-color': '#ff0000',
+            'line-color': getRandomColor(), // Use random color here
             'line-width': 2
         },
         // or points add more layers with different filters
@@ -222,4 +231,3 @@ function showPaths(jsonData) {
     });
     layerLineList.push('python-paths-'+layerLineList.length);
 }
-
