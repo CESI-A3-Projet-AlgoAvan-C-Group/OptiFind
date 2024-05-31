@@ -69,6 +69,7 @@ def extract_packages_with_random_city(packageGroups):
     for pkg_index, pkg in enumerate(packageGroups):
         for i in range(int(pkg['quantity'])):
             ville = get_random_city(communes)
+            communes = communes.drop(ville.name)
             package_id = (pkg_index+1) * 100000 + i + 1
             package = Package(
                 package_id= package_id,

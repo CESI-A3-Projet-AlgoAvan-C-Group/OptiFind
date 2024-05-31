@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from flask import Flask
 from flask_cors import CORS
 from flask import send_from_directory
@@ -45,18 +49,27 @@ def get_packages():
     return 'Packages received'
 
 
-def handle_json(data):
+def handle_json(data, starting_point='Paris'): # Latitude : 48.866667. Longitude : 2.333333
     vehicles = extract_vehicles(data['truckGroups'])
     packages = extract_packages_for_paths(data['mapData'])
 
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
-    print("vehicles_allocated")
-    vehicles_reorganized = reorganize_vehicles(vehicles_allocated, start_delivery=packages[0])
-    print("vehicles_reorganized")
+
+    # Add a package to the start of the delivery at Paris
+    package = Package(0, 0, 0, 48.866667, 2.333333, 'Paris')
+    for vehicle in vehicles_allocated:
+        vehicle.add_package(package)
+
+    vehicles_reorganized = reorganize_vehicles(vehicles_allocated)
+
+    # vehicles_geojson = generate_geojson_vehicles(vehicles_reorganized)
+    # socketio.emit('newLayerPoints', vehicles_geojson)
+
     for vehicle in vehicles_reorganized:
+        if len(vehicle.packages) == 0:
+            continue
         vehicle_geojson = generate_geojson_vehicle(vehicle)
         socketio.emit('newLayerLines', vehicle_geojson)
-        print(vehicle_geojson)
     return 'Paths received'
 
 
