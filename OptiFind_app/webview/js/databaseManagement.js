@@ -2,16 +2,6 @@ let db = '';
 let dbVersion = 1;
 let dbName = 'OptiFind';
 
-var selectedGroup = {
-    dbName: '',
-    type: '',
-    id: '',
-    name: '',
-    quantity: '',
-    volume: '',
-    weight: '',
-}
-
 let openRequest = indexedDB.open(dbName, dbVersion);
 
 openRequest.onupgradeneeded = function (event) {

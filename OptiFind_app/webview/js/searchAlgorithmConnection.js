@@ -1,3 +1,13 @@
+var socket = io.connect('http://' + document.domain + ':' + location.port); // creation de la connexion
+
+socket.on('newLayerPoints', function (pointsJSON) {
+    showPackages(pointsJSON);
+});
+
+socket.on('newLayerLine', function (linesJSON) {
+    showPaths(linesJSON);
+});
+
 async function searchRequest() {
     changeToResults();
     let truckGroups = await getGroups('truckGroups');
@@ -9,9 +19,9 @@ async function searchRequest() {
 
 function dispatcher(truckGroups, packageGroups) {
     let mapData = null;
-    if (map.getSource('uploaded-source')) {
+    if (map.getSource('file-source')) {
         console.log("map.getSource found")
-        mapData = map.getSource('uploaded-source')._data;
+        mapData = map.getSource('file-source')._data;
         console.log(mapData)
         getPaths(truckGroups, packageGroups, mapData);
     } else {
@@ -27,15 +37,11 @@ function dispatcher(truckGroups, packageGroups) {
                 packageGroups: packageGroups,
                 mapData: mapData
             })
-        }).then(response => response.json())
-        .then(data => {
-            showPackages(data);
-            getPaths(truckGroups, packageGroups ,data);
         })
     }
 }
 
-function getPaths( truckGroups, packageGroups, mapData) {
+function getPaths(truckGroups, packageGroups, mapData) {
     fetch('/get_paths', {
         method: 'POST',
         headers: {
@@ -47,17 +53,28 @@ function getPaths( truckGroups, packageGroups, mapData) {
             packageGroups: packageGroups,
             mapData: mapData
         })
-    }).then(response => response.json())
-        .then(data => {
-                showPaths(data);
-            }
-        );
+    })
 }
 
 function backToSearch() {
-    map.removeLayer('uploaded-points')
-    map.removeLayer('uploaded-paths');
-    map.removeSource('python-source');
+    console.log("map layers", map.getStyle().layers)
+    if (map.getSource('file-source')) {
+        map.removeLayer('file-points');
+        map.removeSource('file-source');
+        document.getElementById('delete-file').style.color = '#DDE6ED';
+        document.getElementById('package-container').style.display = 'flex';
+    }
+    document.getElementById('file').value = '';
+    for (let i = 0; i < layerPointList.length; i++) {
+        map.removeLayer(layerPointList[i]);
+        map.removeSource(layerPointList[i]);
+    }
+    for (let i = 0; i < layerLineList.length; i++) {
+        map.removeLayer(layerLineList[i]);
+        map.removeSource(layerLineList[i]);
+    }
+    layerPointList = [];
+    layerLineList = [];
     changeToSearch();
 }
 
