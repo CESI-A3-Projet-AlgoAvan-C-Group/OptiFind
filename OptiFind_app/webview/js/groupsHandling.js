@@ -9,6 +9,7 @@ var selectedGroup = {
     quantity: '',
     volume: '',
     weight: '',
+    truckType: ''
 }
 
 function loadGroups() {
@@ -34,6 +35,7 @@ function loadGroups() {
                 quantity: groups[i].quantity,
                 volume: groups[i].volume,
                 weight: groups[i].weight,
+                truckType: groups[i].truckType
             }
             addGroupToHtml();
         }
@@ -52,6 +54,7 @@ function loadGroups() {
                 quantity: groups[i].quantity,
                 volume: groups[i].volume,
                 weight: groups[i].weight,
+                truckType: groups[i].truckType
             }
             addGroupToHtml();
         }
@@ -66,7 +69,8 @@ function addTruckGroup() {
         name: '',
         quantity: '',
         volume: '',
-        weight: ''
+        weight: '',
+        truckType: ''
     };
     addGroup();
     showHidePopup();
@@ -80,7 +84,8 @@ function addPackageGroup() {
         name: '',
         quantity: '',
         volume: '',
-        weight: ''
+        weight: '',
+        truckType: ''
     };
     addGroup();
     showHidePopup();
@@ -101,6 +106,7 @@ function editGroup(idName) {
         selectedGroup.quantity = request.result.quantity;
         selectedGroup.volume = request.result.volume;
         selectedGroup.weight = request.result.weight;
+        selectedGroup.truckType = request.result.truckType;
         changeGroup();
         showHidePopup();
     }
@@ -112,7 +118,8 @@ function updateGroup() {
         name: selectedGroup.name,
         quantity: selectedGroup.quantity,
         volume: selectedGroup.volume,
-        weight: selectedGroup.weight
+        weight: selectedGroup.weight,
+        truckType: selectedGroup.truckType
     }).onsuccess = function () {
         loadGroups();
         showHidePopup();
@@ -137,7 +144,8 @@ function createGroup() {
         name: selectedGroup.name,
         quantity: selectedGroup.quantity,
         volume: selectedGroup.volume,
-        weight: selectedGroup.weight
+        weight: selectedGroup.weight,
+        truckType: selectedGroup.truckType
     }).onsuccess = function (event) {
         selectedGroup.id = event.target.result;
         loadGroups();
@@ -155,6 +163,10 @@ function addGroupToHtml() {
     name.innerText = selectedGroup.name;
     name.classList.add("experiment-txt");
     groupDiv.appendChild(name);
+    let truckType = document.createElement("p");
+    truckType.innerText = selectedGroup.truckType;
+    truckType.classList.add("experiment-txt");
+    groupDiv.appendChild(truckType);
     let quantity = document.createElement("p");
     quantity.innerText = selectedGroup.quantity;
     quantity.classList.add("experiment-txt");
@@ -180,5 +192,6 @@ function getDbConnection() {
     selectedGroup.quantity = document.getElementById('group-quantity').value;
     selectedGroup.volume = document.getElementById('group-volume').value;
     selectedGroup.weight = document.getElementById('group-weight').value;
+    selectedGroup.truckType = document.getElementById('group-truck-type').value;
     return groups;
 }
