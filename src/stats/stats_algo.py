@@ -240,6 +240,7 @@ def generate_comparison_graphs(results):
     num_vehicles_used = [result['num_vehicles_used'] for result in results]
     total_distances = [result['total_distance'] for result in results]
     model_total_distances = [result['model_total_distance'] for result in results]
+    avg_distances = [result['total_distance'] / result['num_vehicles_used'] if result['num_vehicles_used'] != 0 else 0 for result in results]
 
     plt.figure(figsize=(12, 6))
 
@@ -252,13 +253,13 @@ def generate_comparison_graphs(results):
     plt.legend()
     plt.title('Total Distance Comparison')
 
-    # Plot number of vehicles used comparison
+    # Plot average distance of vehicles
     plt.subplot(1, 2, 2)
-    plt.plot(num_vehicles_used, label='Heuristic Number of Vehicles Used')
+    plt.plot(avg_distances, label='Average Distance per Vehicle')
     plt.xlabel('Test Instance')
-    plt.ylabel('Number of Vehicles Used')
+    plt.ylabel('Average Distance')
     plt.legend()
-    plt.title('Number of Vehicles Used Comparison')
+    plt.title('Average Distance per Vehicle Comparison')
 
     plt.tight_layout()
     plt.savefig('comparison_graphs.png')
