@@ -39,7 +39,7 @@ def extract_stats(vehicles, time_taken):
         'num_packages_delivered': 0, # total number of packages delivered
         'num_packages_not_delivered': 0, # total number of packages not delivered
         'max_num_packages_delivered': 0, # maximum number of packages delivered by a single vehicle
-        'num_vehicles_used': len(vehicles), # total number of vehicles used
+        'num_vehicles_used': 0, # total number of vehicles used
         'total_distance': 0, # total distance traveled by all vehicles
         'min_distance': float('inf'), # minimum distance traveled by a single vehicle
         'max_distance': 0, # maximum distance traveled by a single vehicle
@@ -65,8 +65,10 @@ def extract_stats(vehicles, time_taken):
         stats['num_packages_not_delivered'] += len(vehicle.packages) - packages_delivered
         stats['max_num_packages_delivered'] = max(stats['max_num_packages_delivered'], packages_delivered)
         stats['total_distance'] += vehicle_distance
-        stats['min_distance'] = min(stats['min_distance'], vehicle_distance)
-        stats['max_distance'] = max(stats['max_distance'], vehicle_distance)
+        if packages_delivered > 0:
+            stats['min_distance'] = min(stats['min_distance'], vehicle_distance)
+            stats['max_distance'] = max(stats['max_distance'], vehicle_distance)
+            stats['num_vehicles_used'] += 1
         stats['total_time'] += time_taken
 
     stats['avg_distance'] = stats['total_distance'] / stats['num_vehicles_used']
