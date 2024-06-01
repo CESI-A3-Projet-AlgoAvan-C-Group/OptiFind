@@ -1,6 +1,5 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import json
 import random
 import math
@@ -41,7 +40,9 @@ def extract_stats(vehicles):
         'num_vehicles_used': len(vehicles),
         'total_distance': 0,
         'min_distance': float('inf'),
-        'max_distance': 0
+        'max_distance': 0,
+        'total_capacity_left': 0,
+        'total_volume_left': 0
     }
 
     depot_latitude, depot_longitude = 48.866667, 2.333333
@@ -62,7 +63,12 @@ def extract_stats(vehicles):
         if distance > stats['max_distance']:
             stats['max_distance'] = distance
         stats['num_packages_delivered'] += num_packages
-        stats['num_packages_not_delivered'] += remaining_capacity + remaining_volume
+        stats['total_capacity_left'] += remaining_capacity
+        stats['total_volume_left'] += remaining_volume
+
+    # Calculate number of packages not delivered
+    total_packages = sum(vehicle.capacity for vehicle in vehicles)
+    stats['num_packages_not_delivered'] = total_packages - stats['num_packages_delivered']
 
     if stats['num_vehicles_used'] > 0:
         stats['average_distance'] = stats['total_distance'] / stats['num_vehicles_used']
@@ -101,6 +107,8 @@ def run_heuristic_algorithm(data):
     vehicles = extract_vehicles(data['truckGroups'])
     packages = extract_packages_for_paths(data['mapData'])
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
+    
+    # Ensure that packages are distributed properly
     package = Package(0, 0, 0, 48.866667, 2.333333, 'Paris')
     for vehicle in vehicles_allocated:
         vehicle.add_package(package)
@@ -212,7 +220,7 @@ def compare_algorithms(num_tests, num_packages, vehicle_count, vehicle_capacity)
         # Run mathematical model
         model_distance, model_routes = run_mathematical_model(df, vehicle_count, vehicle_capacity)
         
-        # Collect results
+        # Store results
         heuristic_stats['model_total_distance'] = model_distance if model_distance is not None else float('inf')
         results.append(heuristic_stats)
         
@@ -255,8 +263,8 @@ def generate_comparison_graphs(results):
     plt.show()
 
 if __name__ == '__main__':
-    num_tests = 10
-    num_packages = 20
+    num_tests = 1
+    num_packages = 10
     vehicle_count = 4
     vehicle_capacity = 50
     compare_algorithms(num_tests, num_packages, vehicle_count, vehicle_capacity)
