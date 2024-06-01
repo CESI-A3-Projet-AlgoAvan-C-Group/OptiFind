@@ -36,15 +36,16 @@ def calculate_packages_center(packages):
 
 def extract_stats(vehicles, time_taken):
     stats = {
-        'num_packages_delivered': 0, # total number of packages delivered
-        'num_packages_not_delivered': 0, # total number of packages not delivered
-        'max_num_packages_delivered': 0, # maximum number of packages delivered by a single vehicle
-        'num_vehicles_used': 0, # total number of vehicles used
-        'total_distance': 0, # total distance traveled by all vehicles
-        'min_distance': float('inf'), # minimum distance traveled by a single vehicle
-        'max_distance': 0, # maximum distance traveled by a single vehicle
-        'avg_distance': 0, # average distance traveled by all vehicles
-        'total_time': 0, # total time taken by the algorithm
+        'num_packages_delivered': 0,
+        'num_packages_not_delivered': 0,
+        'max_num_packages_delivered': 0,
+        'max_package_distance': 0,
+        'num_vehicles_used': 0,
+        'total_distance': 0,
+        'min_distance': float('inf'),
+        'max_distance': 0,
+        'avg_distance': 0,
+        'total_time': 0,
     }
 
     depot_latitude, depot_longitude = 48.866667, 2.333333
@@ -55,7 +56,9 @@ def extract_stats(vehicles, time_taken):
 
         previous_latitude, previous_longitude = depot_latitude, depot_longitude
         for package in vehicle.packages:
-            vehicle_distance += haversine(previous_latitude, previous_longitude, package.latitude, package.longitude)
+            current_package_distance = haversine(previous_latitude, previous_longitude, package.latitude, package.longitude)
+            stats['max_package_distance'] = max(stats['max_package_distance'], current_package_distance)
+            vehicle_distance += current_package_distance
             previous_latitude, previous_longitude = package.latitude, package.longitude
             packages_delivered += 1
 
@@ -236,6 +239,34 @@ def compare_algorithms(num_tests, num_packages, vehicle_count, vehicle_capacity)
     # Generate comparison graphs
     generate_comparison_graphs(results)
 
+def test_heuristic_algorithm(instance_sizes):
+    results = []
+
+    for size, num_tests in instance_sizes.items():
+        # Extract package data for heuristic algorithm
+        data = generate_instance(size)
+        packages = extract_packages_with_random_city(data['packageGroups'])
+        features = create_features_from_pkg(packages)
+        packages_geojson = {
+            "type": "FeatureCollection",
+            "features": features
+        }
+        data['mapData'] = packages_geojson
+
+        for _ in range(num_tests):
+            # Run heuristic algorithm
+            heuristic_stats, heuristic_vehicles = run_heuristic_algorithm(data)
+            
+            # Store results
+            heuristic_stats['instance_size'] = size
+            results.append(heuristic_stats)
+        
+    # Write results to CSV
+    keys = results[0].keys()
+    with open('heuristic_algorithm_results.csv', 'w', newline='') as output_file:
+        dict_writer = csv.DictWriter(output_file, fieldnames=keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(results)
 def generate_comparison_graphs(results):
     num_vehicles_used = [result['num_vehicles_used'] for result in results]
     total_distances = [result['total_distance'] for result in results]
@@ -270,4 +301,17 @@ if __name__ == '__main__':
     num_packages = 10
     vehicle_count = 4
     vehicle_capacity = 50
-    compare_algorithms(num_tests, num_packages, vehicle_count, vehicle_capacity)
+    
+    mode = input("Enter mode ('compare' for comparing algorithms, 'test' for testing heuristic only): ").strip().lower()
+    
+    if mode == 'compare':
+        compare_algorithms(num_tests, num_packages, vehicle_count, vehicle_capacity)
+    elif mode == 'test':
+        instance_sizes = {
+            10: 1,
+            20: 1,
+            30: 1
+        }
+        test_heuristic_algorithm(instance_sizes)
+    else:
+        print("Invalid mode selected. Please choose either 'compare' or 'test'.")
