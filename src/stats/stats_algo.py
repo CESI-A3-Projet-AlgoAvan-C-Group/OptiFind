@@ -51,18 +51,15 @@ def extract_stats(vehicles, time_taken):
 
     for vehicle in vehicles:
         vehicle_distance = 0
-        vehicle_time = 0
         packages_delivered = 0
 
         previous_latitude, previous_longitude = depot_latitude, depot_longitude
         for package in vehicle.packages:
             vehicle_distance += haversine(previous_latitude, previous_longitude, package.latitude, package.longitude)
-            vehicle_time += vehicle_distance / 5000
             previous_latitude, previous_longitude = package.latitude, package.longitude
             packages_delivered += 1
 
         vehicle_distance += haversine(previous_latitude, previous_longitude, depot_latitude, depot_longitude)
-        vehicle_time += vehicle_distance / 5000
 
         stats['num_packages_delivered'] += packages_delivered
         stats['num_packages_not_delivered'] += len(vehicle.packages) - packages_delivered
@@ -70,7 +67,7 @@ def extract_stats(vehicles, time_taken):
         stats['total_distance'] += vehicle_distance
         stats['min_distance'] = min(stats['min_distance'], vehicle_distance)
         stats['max_distance'] = max(stats['max_distance'], vehicle_distance)
-        stats['total_time'] += vehicle_time
+        stats['total_time'] += time_taken
 
     stats['avg_distance'] = stats['total_distance'] / stats['num_vehicles_used']
     return stats
@@ -84,7 +81,7 @@ def generate_instance(num_packages):
                 'name': 'truck_1',
                 'quantity': '21',
                 'volume': '20',
-                'weight': '5',
+                'weight': '80',
                 'truckType': 'classic'
             }
         ],
@@ -93,8 +90,8 @@ def generate_instance(num_packages):
                 'id': 1,
                 'name': 'package_1',
                 'quantity': str(num_packages),
-                'volume': str(random.uniform(0.01, 1.0)),
-                'weight': str(random.uniform(0.01, 10.0)),
+                'volume': 0.3,
+                'weight': 1,
                 'truckType': 'classic'
             }
         ],
