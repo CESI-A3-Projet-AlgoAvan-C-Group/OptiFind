@@ -1,5 +1,6 @@
 import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import json
 import random
 import math
@@ -9,6 +10,7 @@ import pulp
 import itertools
 import matplotlib.pyplot as plt
 import csv
+import time
 
 from src.package_handling import *
 from src.package_delivery import *
@@ -32,49 +34,45 @@ def calculate_packages_center(packages):
     count = len(packages)
     return total_latitude / count, total_longitude / count
 
-def extract_stats(vehicles):
+def extract_stats(vehicles, time_taken):
     stats = {
-        'num_packages_delivered': 0,
-        'num_packages_not_delivered': 0,
-        'max_num_packages_delivered': 0,
-        'num_vehicles_used': len(vehicles),
-        'total_distance': 0,
-        'min_distance': float('inf'),
-        'max_distance': 0,
-        'total_capacity_left': 0,
-        'total_volume_left': 0
+        'num_packages_delivered': 0, # total number of packages delivered
+        'num_packages_not_delivered': 0, # total number of packages not delivered
+        'max_num_packages_delivered': 0, # maximum number of packages delivered by a single vehicle
+        'num_vehicles_used': len(vehicles), # total number of vehicles used
+        'total_distance': 0, # total distance traveled by all vehicles
+        'min_distance': float('inf'), # minimum distance traveled by a single vehicle
+        'max_distance': 0, # maximum distance traveled by a single vehicle
+        'avg_distance': 0, # average distance traveled by all vehicles
+        'total_time': 0, # total time taken by the algorithm
     }
 
     depot_latitude, depot_longitude = 48.866667, 2.333333
 
     for vehicle in vehicles:
-        num_packages = len(vehicle.packages)
-        remaining_capacity = vehicle.remaining_capacity
-        remaining_volume = vehicle.remaining_volume
-        
-        package_center_latitude, package_center_longitude = calculate_packages_center(vehicle.packages)
-        distance = haversine(depot_latitude, depot_longitude, package_center_latitude, package_center_longitude)
-        
-        stats['total_distance'] += distance
-        if num_packages > stats['max_num_packages_delivered']:
-            stats['max_num_packages_delivered'] = num_packages
-        if distance < stats['min_distance']:
-            stats['min_distance'] = distance
-        if distance > stats['max_distance']:
-            stats['max_distance'] = distance
-        stats['num_packages_delivered'] += num_packages
-        stats['total_capacity_left'] += remaining_capacity
-        stats['total_volume_left'] += remaining_volume
+        vehicle_distance = 0
+        vehicle_time = 0
+        packages_delivered = 0
 
-    # Calculate number of packages not delivered
-    total_packages = sum(vehicle.capacity for vehicle in vehicles)
-    stats['num_packages_not_delivered'] = total_packages - stats['num_packages_delivered']
+        previous_latitude, previous_longitude = depot_latitude, depot_longitude
+        for package in vehicle.packages:
+            vehicle_distance += haversine(previous_latitude, previous_longitude, package.latitude, package.longitude)
+            vehicle_time += vehicle_distance / 5000
+            previous_latitude, previous_longitude = package.latitude, package.longitude
+            packages_delivered += 1
 
-    if stats['num_vehicles_used'] > 0:
-        stats['average_distance'] = stats['total_distance'] / stats['num_vehicles_used']
-    else:
-        stats['average_distance'] = 0
+        vehicle_distance += haversine(previous_latitude, previous_longitude, depot_latitude, depot_longitude)
+        vehicle_time += vehicle_distance / 5000
 
+        stats['num_packages_delivered'] += packages_delivered
+        stats['num_packages_not_delivered'] += len(vehicle.packages) - packages_delivered
+        stats['max_num_packages_delivered'] = max(stats['max_num_packages_delivered'], packages_delivered)
+        stats['total_distance'] += vehicle_distance
+        stats['min_distance'] = min(stats['min_distance'], vehicle_distance)
+        stats['max_distance'] = max(stats['max_distance'], vehicle_distance)
+        stats['total_time'] += vehicle_time
+
+    stats['avg_distance'] = stats['total_distance'] / stats['num_vehicles_used']
     return stats
 
 def generate_instance(num_packages):
@@ -104,6 +102,8 @@ def generate_instance(num_packages):
     }
 
 def run_heuristic_algorithm(data):
+    start_time = time.time()
+
     vehicles = extract_vehicles(data['truckGroups'])
     packages = extract_packages_for_paths(data['mapData'])
     vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
@@ -114,7 +114,10 @@ def run_heuristic_algorithm(data):
         vehicle.add_package(package)
     vehicles_reorganized = reorganize_vehicles(vehicles_allocated, num_cores=1)
 
-    stats = extract_stats(vehicles_reorganized)
+    end_time = time.time()
+    time_taken = end_time - start_time
+
+    stats = extract_stats(vehicles_reorganized, time_taken)
     return stats, vehicles_reorganized
 
 def run_mathematical_model(df, vehicle_count, vehicle_capacity):
