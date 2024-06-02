@@ -184,8 +184,9 @@ function resetView() {
 
 function showPackages(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+    const layerId = 'python-points-' + layerPointList.length;
     map.addLayer({
-        'id': 'python-points-'+layerPointList.length,
+        'id': layerId,
         'type': 'circle',
         'source': {
             'type': 'geojson',
@@ -198,26 +199,36 @@ function showPackages(jsonData) {
         // or points add more layers with different filters
         'filter': ['==', '$type', 'Point']
     });
-    layerLineList.push('python-points-'+layerPointList.length);
-    map.on('click', 'python-points-'+layerPointList.length, (e) => {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const city = e.features[0].properties.city;
-            const id = e.features[0].properties.package_id;
-            const weight = e.features[0].properties.weight;
-            const volume = e.features[0].properties.volume;
+    map.on('click', layerId, (e) => {
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const city = e.features[0].properties.city;
+        const id = e.features[0].properties.package_id;
+        const weight = e.features[0].properties.weight;
+        const volume = e.features[0].properties.volume;
 
-            // Ensure that if the map is zoomed out such that multiple
-            // copies of the feature are visible, the popup appears
-            // over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
 
-            new maplibregl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(`<h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p>`)
-                .addTo(map);
-        });
+        new maplibregl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`<h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p>`)
+            .addTo(map);
+
+    });
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', layerId, () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', layerId, () => {
+        map.getCanvas().style.cursor = '';
+    });
+    layerPointList.push(layerId);
 }
 
 function getRandomColor() {
@@ -231,9 +242,10 @@ function getRandomColor() {
 
 function showPaths(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+    const layerId = 'python-paths-' + layerLineList.length;
     // Add as source to the map
     map.addLayer({
-        'id': 'python-paths-'+layerLineList.length,
+        'id': layerId,
         'type': 'line',
         'source': {
             'type': 'geojson',
@@ -246,5 +258,30 @@ function showPaths(jsonData) {
         // or points add more layers with different filters
         'filter': ['==', '$type', 'LineString']
     });
-    layerLineList.push('python-paths-'+layerLineList.length);
+    map.on('click', layerId, (e) => {
+        const id = e.features[0].properties.id;
+        const capacity = e.features[0].properties.capacity;
+        const remaining_capacity = e.features[0].properties.remaining_capacity;
+        const volume = e.features[0].properties.volume;
+        const remaining_volume = e.features[0].properties.remaining_volume;
+        const nbPackages = e.features[0].properties.packages.length;
+
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        new maplibregl.Popup()
+            .setLngLat(e.lngLat.wrap())
+            .setHTML(`<h3>Truck ${id}</h3><p>Capacity: ${capacity} kg</p><p>Remaining capacity: ${remaining_capacity} kg</p><p>Volume: ${volume} m³</p><p>Remaining volume: ${remaining_volume} m³</p><p>Number of packages: ${nbPackages}</p>`)
+            .addTo(map);
+    });
+    map.on('mouseenter', layerId, () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', layerId, () => {
+        map.getCanvas().style.cursor = '';
+    });
+    layerLineList.push(layerId);
 }
