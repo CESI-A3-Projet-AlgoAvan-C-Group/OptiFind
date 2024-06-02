@@ -3,6 +3,7 @@ import geopandas as gpd
 import random
 import json
 
+
 def create_features_from_pkg(packages):
     features = []
 
@@ -32,7 +33,7 @@ def extract_vehicles(truckGroups):
     for truck_index, truck in enumerate(truckGroups):
         print(truck)
         for i in range(int(truck['quantity'])):
-            vehicle_id = (truck_index+1) * 10000 + i + 1
+            vehicle_id = (truck_index + 1) * 10000 + i + 1
             vehicle = Vehicle(
                 vehicle_id=vehicle_id,
                 capacity=float(truck['weight']),
@@ -47,6 +48,7 @@ def get_random_city(communes):
     random_number = random.randrange(0, len(communes))
 
     return communes.iloc[random_number]
+
 
 def extract_packages_for_paths(mapData):
     packages = []
@@ -65,6 +67,7 @@ def extract_packages_for_paths(mapData):
         packages.append(package)
     return packages
 
+
 def extract_packages_with_random_city(packageGroups):
     packages = []
     communes = gpd.read_file('assets/data/centre_communes.geojson')
@@ -73,9 +76,9 @@ def extract_packages_with_random_city(packageGroups):
         for i in range(int(pkg['quantity'])):
             ville = get_random_city(communes)
             communes = communes.drop(ville.name)
-            package_id = (pkg_index+1) * 100000 + i + 1
+            package_id = (pkg_index + 1) * 100000 + i + 1
             package = Package(
-                package_id= package_id,
+                package_id=package_id,
                 weight=float(pkg['weight']),
                 volume=float(pkg['volume']),
                 latitude=ville.geometry.y,
@@ -87,3 +90,9 @@ def extract_packages_with_random_city(packageGroups):
             packages.append(package)
 
     return packages
+
+
+def find_start_city(cityname):
+    cities = gpd.read_file('assets/data/centre_communes.geojson')
+    city = cities[cities.nom_officiel == cityname]
+    return city if not city.empty else cities[cities.nom_officiel == 'Paris']

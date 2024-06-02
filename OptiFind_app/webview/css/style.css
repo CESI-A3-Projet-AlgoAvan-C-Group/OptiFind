@@ -312,7 +312,7 @@ input:hover {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(32px);
+    backdrop-filter: blur(8px);
     gap: 32px;
     z-index: 99;
 }
@@ -379,12 +379,30 @@ input:hover {
     width: 180px;
 }
 
+.pup-up-map {
+    padding: 16px;
+}
+
 .ico-delete-file {
     color: var(--clr-lt);
 }
 
 .ico-delete-file:hover {
     cursor: pointer;
+}
+
+.truck-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.truck-result {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
 }
 
 #experiment-input {

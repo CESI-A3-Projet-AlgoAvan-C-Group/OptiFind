@@ -74,13 +74,38 @@
         </button>
     </div>
     <div class="container-settings" id="container-results">
-        <button id="btn-close-results" class="btn-left-panel" onclick="backToSearch()">
-            <ion-icon name="arrow-back" class="ico reset-view"></ion-icon>
-            <span class="btn-text">Back to search</span>
-        </button>
+        <div>
+            <h3>
+                Trucks
+            </h3>
+            <div class="truck-results">
+                <div class="truck-result">
+                    <p>Classic</p>
+                    <p id="truck-result-classic">0</p>
+                </div>
+                <div class="truck-result">
+                    <p>Refrigirated</p>
+                    <p id="truck-result-refrigirated">0</p>
+                </div>
+                <div class="truck-result">
+                    <p>Chemicals</p>
+                    <p id="truck-result-chemicals">0</p>
+                </div>
+                <div class="truck-result">
+                    <h4>
+                        Total
+                    </h4>
+                    <p id="truck-result-total">0</p>
+                </div>
+            </div>
+        </div>
+            <button id="btn-close-results" class="btn-left-panel" onclick="backToSearch()">
+                <ion-icon name="arrow-back" class="ico reset-view"></ion-icon>
+                <span class="btn-text">Back to search</span>
+            </button>
     </div>
-</div>
 
+</div>
 <div id="popup" class="popup">
     <div id="pop-up-content" class="pop-up-content">
         <h1 id="popup-text">
@@ -123,27 +148,27 @@
                 <option value="refrigirated">refrigirated</option>
                 <option value="chemicals">chemicals</option>
             </select>
-        <div class="pop-up-actions">
-            <button id="btn-delete-group" class="btn-delete-group" onclick="deleteGroup()">
-                <ion-icon name="trash" class="ico reset-view"></ion-icon>
-                <span class="btn-text">Delete</span>
-            </button>
-            <button id="btn-cancel-group" class="btn-delete-group" onclick="cancelGroup()">
-                <ion-icon name="close" class="ico reset-view"></ion-icon>
-                <span class="btn-text">Cancel</span>
-            </button>
-            <button id="btn-create-group" class="btn-create-group" onclick="createGroup()">
-                <ion-icon name="add" class="ico reset-view"></ion-icon>
-                <span class="btn-text">Create</span>
-            </button>
-            <button id="btn-update-group" class="btn-create-group" onclick="updateGroup()">
-                <ion-icon name="checkmark" class="ico reset-view"></ion-icon>
-                <span class="btn-text">Update</span>
-            </button>
+            <div class="pop-up-actions">
+                <button id="btn-delete-group" class="btn-delete-group" onclick="deleteGroup()">
+                    <ion-icon name="trash" class="ico reset-view"></ion-icon>
+                    <span class="btn-text">Delete</span>
+                </button>
+                <button id="btn-cancel-group" class="btn-delete-group" onclick="cancelGroup()">
+                    <ion-icon name="close" class="ico reset-view"></ion-icon>
+                    <span class="btn-text">Cancel</span>
+                </button>
+                <button id="btn-create-group" class="btn-create-group" onclick="createGroup()">
+                    <ion-icon name="add" class="ico reset-view"></ion-icon>
+                    <span class="btn-text">Create</span>
+                </button>
+                <button id="btn-update-group" class="btn-create-group" onclick="updateGroup()">
+                    <ion-icon name="checkmark" class="ico reset-view"></ion-icon>
+                    <span class="btn-text">Update</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
-
 <button id="btn-reset-view" class="btn-reset-view" onclick="resetView()">
     <ion-icon name="refresh" class="ico reset-view"></ion-icon>
     <span class="btn-text">Reset view</span>

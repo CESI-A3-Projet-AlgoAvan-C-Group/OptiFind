@@ -15,7 +15,8 @@ def generate_geojson_vehicles(vehicles):
                 "remaining_capacity": vehicle.remaining_capacity,
                 "volume": vehicle.volume,
                 "remaining_volume": vehicle.remaining_volume,
-                "packages": [package.id for package in vehicle.packages]
+                "packages": [package.id for package in vehicle.packages],
+                "truckType": vehicle.type
             },
             "geometry": line_string
         }
@@ -39,7 +40,8 @@ def generate_geojson_vehicle(vehicle):
             "remaining_capacity": vehicle.remaining_capacity,
             "volume": vehicle.volume,
             "remaining_volume": vehicle.remaining_volume,
-            "packages": [package.id for package in vehicle.packages]
+            "packages": [package.id for package in vehicle.packages],
+            "truckType": vehicle.type
         },
         "geometry": line_string
     }
