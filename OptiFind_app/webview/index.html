@@ -74,13 +74,35 @@
         </button>
     </div>
     <div class="container-settings" id="container-results">
-        <div class="experiment-selection">
-            <p>Trucks used :</p>
+        <div>
+            <h3>
+                Trucks
+            </h3>
+            <div class="truck-results">
+                <div class="truck-result">
+                    <p>Classic</p>
+                    <p id="truck-result-classic">0</p>
+                </div>
+                <div class="truck-result">
+                    <p>Refrigirated</p>
+                    <p id="truck-result-refrigirated">0</p>
+                </div>
+                <div class="truck-result">
+                    <p>Chemicals</p>
+                    <p id="truck-result-chemicals">0</p>
+                </div>
+                <div class="truck-result">
+                    <h4>
+                        Total
+                    </h4>
+                    <p id="truck-result-total">0</p>
+                </div>
+            </div>
+        </div>
             <button id="btn-close-results" class="btn-left-panel" onclick="backToSearch()">
                 <ion-icon name="arrow-back" class="ico reset-view"></ion-icon>
                 <span class="btn-text">Back to search</span>
             </button>
-        </div>
     </div>
 
 </div>

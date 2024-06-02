@@ -1,5 +1,6 @@
 document.getElementById("ico-panel-hide").addEventListener("click", hidePanel)
 document.getElementById("popup").style.display = "none";
+document.getElementById("container-results").style.display = "none";
 let stepView = "search";
 let nameUpper = {truck: "Truck", package: "Package"};
 

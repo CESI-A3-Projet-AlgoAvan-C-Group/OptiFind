@@ -279,6 +279,15 @@ function showPaths(jsonData) {
         }
     }, 10);
 
+    // increment the correct truck counter
+    const truckType = geoJSONcontent.features[0].properties.truckType;
+    const truckCounter = document.getElementById('truck-result-'+truckType);
+    truckCounter.innerHTML = parseInt(truckCounter.innerHTML) + 1;
+    // update total counter
+
+    const totalCounter = document.getElementById('truck-result-total');
+    totalCounter.innerHTML = parseInt(totalCounter.innerHTML) + 1;
+
     map.on('click', layerId, (e) => {
         const id = e.features[0].properties.id;
         const capacity = e.features[0].properties.capacity;
@@ -305,6 +314,7 @@ function showPaths(jsonData) {
         });
         // Change the opacity of the line when the mouse is over the line.
         map.setPaintProperty(layerId, 'line-opacity', 1);
+        map.setPaintProperty(layerId, 'line-width', 4);
     });
 
 // Change it back to a pointer when it leaves.
@@ -314,6 +324,7 @@ function showPaths(jsonData) {
         layerLineList.forEach((layer) => {
             if (layer !== layerId) {
                 map.setPaintProperty(layer, 'line-opacity', 1);
+                map.setPaintProperty(layerId, 'line-width', 2);
             }
         });
     });

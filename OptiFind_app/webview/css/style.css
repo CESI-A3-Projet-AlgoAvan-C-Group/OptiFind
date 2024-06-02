@@ -391,6 +391,20 @@ input:hover {
     cursor: pointer;
 }
 
+.truck-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.truck-result {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
 #experiment-input {
     padding-top: 16px;
     border-top: 2px solid var(--clr-primary);
