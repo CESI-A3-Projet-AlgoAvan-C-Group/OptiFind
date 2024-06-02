@@ -17,7 +17,8 @@ def create_features_from_pkg(packages):
                 "package_id": package.id,
                 "weight": package.weight,
                 "volume": package.volume,
-                "city": package.city
+                "city": package.city,
+                "truckType": package.type
             }
         }
 
@@ -35,7 +36,8 @@ def extract_vehicles(truckGroups):
             vehicle = Vehicle(
                 vehicle_id=vehicle_id,
                 capacity=float(truck['weight']),
-                volume=float(truck['volume']))
+                volume=float(truck['volume']),
+                vehicle_type=str(truck['truckType']))
             vehicles.append(vehicle)
 
     return vehicles
@@ -57,14 +59,15 @@ def extract_packages_for_paths(mapData):
             volume=float(properties['volume']),
             latitude=geometry['coordinates'][1],
             longitude=geometry['coordinates'][0],
-            city=properties['city']
+            city=properties['city'],
+            package_type=str(properties['truckType'])
         )
         packages.append(package)
     return packages
 
 def extract_packages_with_random_city(packageGroups):
     packages = []
-    communes = gpd.read_file('assets/data/centre_communes.geojson')
+    communes = gpd.read_file('../assets/data/centre_communes.geojson')
 
     for pkg_index, pkg in enumerate(packageGroups):
         for i in range(int(pkg['quantity'])):
@@ -77,7 +80,9 @@ def extract_packages_with_random_city(packageGroups):
                 volume=float(pkg['volume']),
                 latitude=ville.geometry.y,
                 longitude=ville.geometry.x,
-                city=ville.nom_officiel)
+                city=ville.nom_officiel,
+                package_type=str(pkg['truckType'])
+            )
 
             packages.append(package)
 

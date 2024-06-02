@@ -3,13 +3,14 @@ from math import radians, sin, cos, sqrt, atan2
 PARIS_LAT, PARIS_LON = 48.8566, 2.3522
 
 class Vehicle:
-    def __init__(self, vehicle_id, capacity, volume):
+    def __init__(self, vehicle_id, capacity, volume, vehicle_type):
         self.id = vehicle_id
         self.capacity = capacity
         self.remaining_capacity = capacity
         self.volume = volume
         self.remaining_volume = volume
         self.packages = []
+        self.type = vehicle_type
 
     def add_package(self, package):
         if self.remaining_capacity >= package.weight or self.remaining_volume >= package.volume:
@@ -33,13 +34,14 @@ class Vehicle:
 
 
 class Package:
-    def __init__(self, package_id, weight, volume, latitude, longitude, city):
+    def __init__(self, package_id, weight, volume, latitude, longitude, city, package_type):
         self.id = package_id
         self.weight = weight
         self.volume = volume
         self.latitude = latitude
         self.longitude = longitude
-        self.city= city
+        self.city = city
+        self.type = package_type
 
     def calculate_distance(self, reference_position):
         lat1 = radians(self.latitude)
@@ -58,7 +60,7 @@ class Package:
 
         return distance
 
-def calculate_score(package, vehicle, max_distance=500):
+def calculate_score(package, vehicle, max_distance=150):
 
     center_position = vehicle.calculate_packages_center()
     distance = package.calculate_distance(center_position)
@@ -94,7 +96,8 @@ def best_fit_decreasing_score(packages, vehicles):
         best_score = float(0)
 
         for vehicle in vehicles:
-            if vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume:
+            if (vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume
+                    and vehicle.type == package.type):
                 score = calculate_score(package, vehicle)
                 if score > best_score:
                     best_score = score
@@ -109,7 +112,7 @@ def best_fit_decreasing_score(packages, vehicles):
     return vehicles, packages_left
 
 
-def best_fit_decreasing(packages, vehicles):
+def best_fit(packages, vehicles):
     """
         Attribue les colis aux véhicules en utilisant l'algorithme Best Fit Decreasing.
 
@@ -122,16 +125,16 @@ def best_fit_decreasing(packages, vehicles):
         packages_left (list of Package): Liste d'objets Package qui n'ont pas été distribués.
     """
 
-    sorted_packages = sorted(packages, key=lambda x: (x.weight, x.volume), reverse=True)
     packages_left = []
 
-    for package in sorted_packages:
+    for package in packages:
         best_fit_vehicle = None
         min_space_left = float('inf')
         min_volume_left = float('inf')
 
         for vehicle in vehicles:
-            if vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume:
+            if (vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume
+                    and vehicle.type == package.type):
                 space_left = vehicle.remaining_capacity - package.weight
                 volume_left = vehicle.remaining_volume - package.volume
 
@@ -169,7 +172,8 @@ def first_fit(packages, vehicles):
     for package in packages:
         assigned = False
         for vehicle in sorted_vehicles:
-            if vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume:
+            if (vehicle.remaining_capacity >= package.weight and vehicle.remaining_volume >= package.volume
+                    and vehicle.type == package.type):
                 vehicle.add_package(package)
                 assigned = True
                 break
@@ -221,46 +225,40 @@ def get_neighbors(region, grid_rows, grid_cols):
 
 
 def generate_snail_pattern(start_row, start_col, grid_rows, grid_cols):
-    directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]  # Right, Down, Left, Up
     snail_pattern = []
+    visited = set()
+    directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]  # Left, Up, Right, Down
+    direction_index = 0
 
     row, col = start_row, start_col
-    direction_index = 0
-    steps = 1
-    step_count = 0
 
     for _ in range(grid_rows * grid_cols):
-        snail_pattern.append((row, col))
-        step_count += 1
-
-        if step_count == steps:
-            step_count = 0
-            direction_index = (direction_index + 1) % 4
-            if direction_index % 2 == 0:
-                steps += 1
-
-        row += directions[direction_index][0]
-        col += directions[direction_index][1]
-
-        if row < 0 or row >= grid_rows or col < 0 or col >= grid_cols:
+        if (row, col) in visited or not (0 <= row < grid_rows) or not (0 <= col < grid_cols):
             break
+        snail_pattern.append((row, col))
+        visited.add((row, col))
+
+        # Calculate next position
+        next_row, next_col = row + directions[direction_index][0], col + directions[direction_index][1]
+
+        # Change direction if next position is out of bounds or already visited
+        if not (0 <= next_row < grid_rows) or not (0 <= next_col < grid_cols) or (next_row, next_col) in visited:
+            direction_index = (direction_index + 1) % 4
+            next_row, next_col = row + directions[direction_index][0], col + directions[direction_index][1]
+
+        row, col = next_row, next_col
 
     return snail_pattern
 
-
-def distribute_packages(packages, vehicles, grid_rows, grid_cols, lat_min, lat_max, lon_min, lon_max):
+def distribute_packages(packages, vehicles, lat_min = 41.0, lat_max = 51.0, lon_min = -5.0, lon_max = 9.0, grid_rows = 10, grid_cols = 10):
     grid = {(i, j): [] for i in range(grid_rows) for j in range(grid_cols)}
-    remaining_packages = []
 
     for package in packages:
         region = assign_region(package, grid_rows, grid_cols, lat_min, lat_max, lon_min, lon_max)
         if region in grid:
             grid[region].append(package)
-        else:
-            remaining_packages.append(package)
 
-    print(grid)
-
+    print(grid_rows, grid_cols)
     snail_order = generate_snail_pattern(grid_rows-1, grid_cols-1, grid_rows, grid_cols)
     print(snail_order)
     leftover = []

@@ -11,7 +11,7 @@ from flask_socketio import SocketIO
 from flask import request
 from src.geojson_utils import *
 import time
-
+from src.vehicle_manager import distribute_packages
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
@@ -57,12 +57,12 @@ def handle_json(data, starting_point='Paris'): # Latitude : 48.866667. Longitude
 
     start_time = time.time()
 
-    vehicles_allocated, packages_left = best_fit_decreasing_score(packages=packages, vehicles=vehicles)
+    vehicles_allocated, remaining_packages = distribute_packages(packages, vehicles)
 
     print("Time to allocate vehicles: %s seconds" % (time.time() - start_time))
 
     # Add a package to the start of the delivery at Paris
-    package = Package(0, 0, 0, 48.866667, 2.333333, 'Paris')
+    package = Package(0, 0, 0, 48.866667, 2.333333, 'Paris', 'depot')
     for vehicle in vehicles_allocated:
         vehicle.add_package(package)
 
