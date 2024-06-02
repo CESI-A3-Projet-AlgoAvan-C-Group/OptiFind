@@ -70,7 +70,7 @@ def extract_packages_for_paths(mapData):
 
 def extract_packages_with_random_city(packageGroups):
     packages = []
-    communes = gpd.read_file('assets/data/centre_communes.geojson')
+    communes = gpd.read_file('../assets/data/centre_communes.geojson')
 
     for pkg_index, pkg in enumerate(packageGroups):
         for i in range(int(pkg['quantity'])):
@@ -93,6 +93,6 @@ def extract_packages_with_random_city(packageGroups):
 
 
 def find_start_city(cityname):
-    cities = gpd.read_file('assets/data/centre_communes.geojson')
+    cities = gpd.read_file('../assets/data/centre_communes.geojson')
     city = cities[cities.nom_officiel == cityname]
     return city if not city.empty else cities[cities.nom_officiel == 'Paris']

@@ -269,7 +269,7 @@ def distribute_packages(packages, vehicles, lat_min = 41.0, lat_max = 51.0, lon_
         sorted_packages.extend(sorted(packages_to_distribute, key=lambda x: (x.weight, x.volume), reverse=True))
 
         if sorted_packages:
-            vehicles, leftover = first_fit(sorted_packages, vehicles)
+            vehicles, leftover = best_fit(sorted_packages, vehicles)
         else:
             continue
 
