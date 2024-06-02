@@ -14,7 +14,6 @@
     {
       "id": "background",
       "type": "background",
-      "filter": ["all"],
       "paint": {"background-color": "rgba(82, 109, 130, 1)"}
     },
     {
@@ -459,7 +458,6 @@
       ],
       "layout": {
         "text-size": 14,
-        "icon-image": {"base": 1, "stops": [[0, "star-11"], [8, ""]]},
         "text-transform": "uppercase",
         "text-font": ["Metropolis Regular", "Noto Sans Regular"],
         "text-justify": "left",

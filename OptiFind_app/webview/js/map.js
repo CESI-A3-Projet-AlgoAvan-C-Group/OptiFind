@@ -69,6 +69,23 @@ map.on('load', () => {
         },
         labelLayerId
     );
+
+    fetch('../assets/map.geojson'
+    ).then((response) => response.json()
+    ).then((data) => {
+        map.addLayer({
+            'id': 'places',
+            'type': 'fill',
+            'source': {
+                'type': 'geojson',
+                'data': data
+            },
+            'paint': {
+                'fill-color': 'rgba(39, 55, 77, 1)',
+                'fill-opacity': 0.5
+            }
+        });
+    });
 });
 
 function handleFileSelect(evt) {
