@@ -379,6 +379,10 @@ input:hover {
     width: 180px;
 }
 
+.pup-up-map {
+    padding: 16px;
+}
+
 .ico-delete-file {
     color: var(--clr-lt);
 }

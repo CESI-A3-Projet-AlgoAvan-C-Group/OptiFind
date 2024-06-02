@@ -215,7 +215,7 @@ function showPackages(jsonData) {
 
         new maplibregl.Popup()
             .setLngLat(coordinates)
-            .setHTML(`<h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p>`)
+            .setHTML(`<div class="pup-up-map"><h3>Package ${id}</h3><p>City: ${city}</p><p>Weight: ${weight} kg</p><p>Volume: ${volume} m³</p></div>`)
             .addTo(map);
 
     });
@@ -243,14 +243,20 @@ function getRandomColor() {
 function showPaths(jsonData) {
     const geoJSONcontent = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
     const layerId = 'python-paths-' + layerLineList.length;
+
+    const coordinates = geoJSONcontent.features[0].geometry.coordinates;
+    geoJSONcontent.features[0].geometry.coordinates = [coordinates[0]];
+
+    map.addSource(layerId, {
+        'type': 'geojson',
+        'data': geoJSONcontent
+    });
+
     // Add as source to the map
     map.addLayer({
         'id': layerId,
         'type': 'line',
-        'source': {
-            'type': 'geojson',
-            'data': geoJSONcontent
-        },
+        'source': layerId,
         'paint': {
             'line-color': getRandomColor(), // Use random color here
             'line-width': 2
@@ -258,28 +264,41 @@ function showPaths(jsonData) {
         // or points add more layers with different filters
         'filter': ['==', '$type', 'LineString']
     });
+
+    let i = 0;
+    const timer = window.setInterval(() => {
+        if (i < coordinates.length) {
+            geoJSONcontent.features[0].geometry.coordinates.push(
+                coordinates[i]
+            );
+            map.getSource(layerId).setData(geoJSONcontent);
+            i++;
+        } else {
+            window.clearInterval(timer);
+        }
+    }, 10);
+
     map.on('click', layerId, (e) => {
         const id = e.features[0].properties.id;
         const capacity = e.features[0].properties.capacity;
         const remaining_capacity = e.features[0].properties.remaining_capacity;
         const volume = e.features[0].properties.volume;
         const remaining_volume = e.features[0].properties.remaining_volume;
-        const nbPackages = e.features[0].properties.packages.length;
-
+        const truckType = e.features[0].properties.truckType;
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
         new maplibregl.Popup()
             .setLngLat(e.lngLat.wrap())
-            .setHTML(`<h3>Truck ${id}</h3><p>Capacity: ${capacity} kg</p><p>Remaining capacity: ${remaining_capacity} kg</p><p>Volume: ${volume} m³</p><p>Remaining volume: ${remaining_volume} m³</p><p>Number of packages: ${nbPackages}</p>`)
+            .setHTML(`<div class="pup-up-map"><h3>Truck ${id}</h3><p>Capacity: ${capacity} kg</p><p>Remaining capacity: ${remaining_capacity} kg</p><p>Volume: ${volume} m³</p><p>Remaining volume: ${remaining_volume} m³</p> <p>Truck type: ${truckType}</p></div>`)
             .addTo(map);
     });
     map.on('mouseenter', layerId, () => {
         map.getCanvas().style.cursor = 'pointer';
     });
 
-    // Change it back to a pointer when it leaves.
+// Change it back to a pointer when it leaves.
     map.on('mouseleave', layerId, () => {
         map.getCanvas().style.cursor = '';
     });
