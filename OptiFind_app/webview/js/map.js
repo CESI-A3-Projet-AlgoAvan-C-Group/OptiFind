@@ -259,7 +259,8 @@ function showPaths(jsonData) {
         'source': layerId,
         'paint': {
             'line-color': getRandomColor(), // Use random color here
-            'line-width': 2
+            'line-width': 2,
+            'line-opacity': 1
         },
         // or points add more layers with different filters
         'filter': ['==', '$type', 'LineString']
@@ -296,11 +297,25 @@ function showPaths(jsonData) {
     });
     map.on('mouseenter', layerId, () => {
         map.getCanvas().style.cursor = 'pointer';
+        // change the opacity of evrything else
+        layerLineList.forEach((layer) => {
+            if (layer !== layerId) {
+                map.setPaintProperty(layer, 'line-opacity', 0.1);
+            }
+        });
+        // Change the opacity of the line when the mouse is over the line.
+        map.setPaintProperty(layerId, 'line-opacity', 1);
     });
 
 // Change it back to a pointer when it leaves.
     map.on('mouseleave', layerId, () => {
         map.getCanvas().style.cursor = '';
+        // change the opacity of evrything else
+        layerLineList.forEach((layer) => {
+            if (layer !== layerId) {
+                map.setPaintProperty(layer, 'line-opacity', 1);
+            }
+        });
     });
     layerLineList.push(layerId);
 }
