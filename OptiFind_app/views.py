@@ -30,8 +30,6 @@ def index():
 @app.route('/get_paths', methods=['POST'])
 def get_packages():
     data = request.json  # data from the client
-    print(data)
-
     if data['mapData'] is None:
         packages = extract_packages_with_random_city(data['packageGroups'])
         features = create_features_from_pkg(packages)
@@ -50,7 +48,7 @@ def get_packages():
     return 'Packages received'
 
 
-def handle_json(data, starting_point='Paris'): # Latitude : 48.866667. Longitude : 2.333333
+def handle_json(data): # Latitude : 48.866667. Longitude : 2.333333
     
     vehicles = extract_vehicles(data['truckGroups'])
     packages = extract_packages_for_paths(data['mapData'])
@@ -60,9 +58,9 @@ def handle_json(data, starting_point='Paris'): # Latitude : 48.866667. Longitude
     vehicles_allocated, remaining_packages = distribute_packages(packages, vehicles)
 
     print("Time to allocate vehicles: %s seconds" % (time.time() - start_time))
-
+    startcity = find_start_city(data['startCity'])
     # Add a package to the start of the delivery at Paris
-    package = Package(0, 0, 0, 48.866667, 2.333333, 'Paris', 'depot')
+    package = Package(0, 0, 0, float(startcity.geometry.y), float(startcity.geometry.x), startcity.nom_officiel, 'depot')
     for vehicle in vehicles_allocated:
         vehicle.add_package(package)
 
