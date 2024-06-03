@@ -288,6 +288,9 @@ function showPaths(jsonData) {
     const totalCounter = document.getElementById('truck-result-total');
     totalCounter.innerHTML = parseInt(totalCounter.innerHTML) + 1;
 
+    const distanceCounter = document.getElementById('distance-result-total');
+    distanceCounter.innerHTML = parseInt(distanceCounter.innerHTML) + parseInt(geoJSONcontent.features[0].properties.distance);
+
     map.on('click', layerId, (e) => {
         const id = e.features[0].properties.id;
         const capacity = e.features[0].properties.capacity;
@@ -295,13 +298,14 @@ function showPaths(jsonData) {
         const volume = e.features[0].properties.volume;
         const remaining_volume = e.features[0].properties.remaining_volume;
         const truckType = e.features[0].properties.truckType;
+        const distance = parseInt(e.features[0].properties.distance);
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
         // over the copy being pointed to.
         new maplibregl.Popup()
             .setLngLat(e.lngLat.wrap())
-            .setHTML(`<div class="pup-up-map"><h3>Truck ${id}</h3><p>Capacity: ${capacity} kg</p><p>Remaining capacity: ${remaining_capacity} kg</p><p>Volume: ${volume} m³</p><p>Remaining volume: ${remaining_volume} m³</p> <p>Truck type: ${truckType}</p></div>`)
+            .setHTML(`<div class="pup-up-map"><h3>Truck ${id}</h3><p>Capacity: ${capacity} kg</p><p>Remaining capacity: ${remaining_capacity} kg</p><p>Volume: ${volume} m³</p><p>Remaining volume: ${remaining_volume} m³</p> <p>Truck type: ${truckType}</p> <p> Distance : ${distance}</p> </div>`)
             .addTo(map);
     });
     map.on('mouseenter', layerId, () => {

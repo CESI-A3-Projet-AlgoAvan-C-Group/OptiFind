@@ -59,4 +59,9 @@ function changeToSearch() {
     document.getElementById("container-search").style.display = "flex";
     document.getElementById("container-results").style.display = "none";
     document.getElementById("mode-text").innerText = "Search";
+    document.getElementById("truck-result-chemicals").innerText = "0";
+    document.getElementById("truck-result-classic").innerText = "0";
+    document.getElementById("truck-result-refrigirated").innerText = "0";
+    document.getElementById("truck-result-total").innerText = "0";
+    document.getElementById("distance-result-total").innerText = "0";
 }
