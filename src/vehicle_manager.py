@@ -24,6 +24,15 @@ class Vehicle:
             self.remaining_capacity += package.weight
             self.remaining_volume += package.volume
 
+    def calculate_distances_between_packages(self):
+        distances = []
+        for i in range(len(self.packages) - 1):
+            distance = self.packages[i].calculate_distance(
+                (self.packages[i + 1].latitude, self.packages[i + 1].longitude)
+            )
+            distances.append(distance)
+        return sum(distances)
+
     def calculate_packages_center(self):
         if not self.packages:
             return PARIS_LAT, PARIS_LON

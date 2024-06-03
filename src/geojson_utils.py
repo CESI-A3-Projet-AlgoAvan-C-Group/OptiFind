@@ -41,7 +41,8 @@ def generate_geojson_vehicle(vehicle):
             "volume": vehicle.volume,
             "remaining_volume": vehicle.remaining_volume,
             "packages": [package.id for package in vehicle.packages],
-            "truckType": vehicle.type
+            "truckType": vehicle.type,
+            "distance": vehicle.calculate_distances_between_packages()
         },
         "geometry": line_string
     }
