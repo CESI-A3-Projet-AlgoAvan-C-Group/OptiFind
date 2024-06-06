@@ -1,7 +1,8 @@
 from concurrent.futures import ProcessPoolExecutor
 
 from src.geojson_utils import read_geojson
-from src.vehicle_manager import Vehicle, Package
+from src.vehicle import Vehicle
+from src.package import Package
 from src.ant_colony import ant_colony
 import copy
 
