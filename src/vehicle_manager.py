@@ -1,74 +1,3 @@
-from math import radians, sin, cos, sqrt, atan2
-
-PARIS_LAT, PARIS_LON = 48.8566, 2.3522
-
-class Vehicle:
-    def __init__(self, vehicle_id, capacity, volume, vehicle_type):
-        self.id = vehicle_id
-        self.capacity = capacity
-        self.remaining_capacity = capacity
-        self.volume = volume
-        self.remaining_volume = volume
-        self.packages = []
-        self.type = vehicle_type
-
-    def add_package(self, package):
-        if self.remaining_capacity >= package.weight or self.remaining_volume >= package.volume:
-            self.packages.append(package)
-            self.remaining_capacity -= package.weight
-            self.remaining_volume -= package.volume
-
-    def remove_package(self, package):
-        if package in self.packages:
-            self.packages.remove(package)
-            self.remaining_capacity += package.weight
-            self.remaining_volume += package.volume
-
-    def calculate_distances_between_packages(self):
-        distances = []
-        for i in range(len(self.packages) - 1):
-            distance = self.packages[i].calculate_distance(
-                (self.packages[i + 1].latitude, self.packages[i + 1].longitude)
-            )
-            distances.append(distance)
-        return sum(distances)
-
-    def calculate_packages_center(self):
-        if not self.packages:
-            return PARIS_LAT, PARIS_LON
-        total_latitude = sum(package.latitude for package in self.packages)
-        total_longitude = sum(package.longitude for package in self.packages)
-        count = len(self.packages)
-        return [total_latitude / count, total_longitude / count]
-
-
-class Package:
-    def __init__(self, package_id, weight, volume, latitude, longitude, city, package_type):
-        self.id = package_id
-        self.weight = weight
-        self.volume = volume
-        self.latitude = latitude
-        self.longitude = longitude
-        self.city = city
-        self.type = package_type
-
-    def calculate_distance(self, reference_position):
-        lat1 = radians(self.latitude)
-        lon1 = radians(self.longitude)
-        lat2 = radians(reference_position[0])
-        lon2 = radians(reference_position[1])
-
-        R = 6371.0
-
-        dlat = abs(lat2 - lat1)
-        dlon = abs(lon2 - lon1)
-
-        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-        c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        distance = R * c
-
-        return distance
-
 def calculate_score(package, vehicle, max_distance=150):
 
     center_position = vehicle.calculate_packages_center()
@@ -266,12 +195,8 @@ def distribute_packages(packages, vehicles, lat_min = 41.0, lat_max = 51.0, lon_
         region = assign_region(package, grid_rows, grid_cols, lat_min, lat_max, lon_min, lon_max)
         if region in grid:
             grid[region].append(package)
-
-    print(grid_rows, grid_cols)
     snail_order = generate_snail_pattern(grid_rows-1, grid_cols-1, grid_rows, grid_cols)
-    print(snail_order)
     leftover = []
-    print(len(packages))
     for region in snail_order:
         packages_to_distribute = grid.pop(region, [])
         sorted_packages = sorted(leftover, key=lambda x: (x.weight, x.volume), reverse=True)

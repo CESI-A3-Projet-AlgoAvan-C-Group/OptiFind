@@ -56,7 +56,27 @@ pip install -r requirements.txt
 
 ## Usage
 
-Not yet available
+To use the project, you need to follow these steps:
+
+1. Go to the `OptiFind_app` folder:
+
+```bash
+cd OptiFind_app
+```
+
+2. Run the Flask application:
+
+```bash
+flask --app views.py run
+```
+
+3. Open your browser and go to the following URL:
+
+```
+http://127.0.0.1:5000/
+```
+
+4. You can now use the web application to create a VRP instance and to visualize the solution.
 
 ## Contributors
 

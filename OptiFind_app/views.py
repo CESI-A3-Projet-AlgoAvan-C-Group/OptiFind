@@ -60,13 +60,13 @@ def handle_json(data): # Latitude : 48.866667. Longitude : 2.333333
     print("Time to allocate vehicles: %s seconds" % (time.time() - start_time))
     startcity = find_start_city(data['startCity'])
     # Add a package to the start of the delivery at Paris
-    package = Package(0, 0, 0, float(startcity.geometry.y), float(startcity.geometry.x), startcity.nom_officiel, 'depot')
+    package = Package(0, 0, 0, float(startcity.geometry.y.iloc[0]), float(startcity.geometry.x.iloc[0]), startcity.nom_officiel.iloc[0], 'depot')
     for vehicle in vehicles_allocated:
         vehicle.add_package(package)
 
     start_time = time.time()
 
-    vehicles_reorganized = reorganize_vehicles(vehicles_allocated, num_cores=4)
+    vehicles_reorganized = reorganize_vehicles(vehicles_allocated, num_cores=16)
 
     print("Time to reorganize vehicles: %s seconds" % (time.time() - start_time))
 
