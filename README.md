@@ -17,16 +17,20 @@ The project is composed of a Frontend part and a Backend part. The Frontend is a
 
 ## Features
 
+The project has the following features:
+
+- **Create a VRP instance**: The user can create a VRP instance by specifying the types of packages, the number of packages, the number of vehicles and the capacity of the vehicles.
+- **Visualize the solution**: The user can visualize the solution of the VRP instance by displaying the routes of the vehicles on a map.
+
 ## Folder organization
 
 The project is organized in several folders:
 
-- [`assets`](assets/): Contains the assets of the project (images, data, etc.).
+- [`assets`](assets/): Contains the assets of the project (images, data).
 - [`OptiFind_app`](OptiFind_app/): Contains the flask application of the project.
 - [`reports`](reports/): Contains all the reports that we have to submit to our school in Jupyter Notebook format.
 - [`src`](src/): Contains the backend part of the project.
-- [`tests`](tests/): Contains the unit tests of the project.
-- [`tools`](tools/): Contains the tools to generate VRP instances, to test the algorithm and to compare the results with other algorithms.
+- [`tests`](tests/): Contains the tests of the project.
 
 ## Installation
 
@@ -40,19 +44,19 @@ To install the project, you need to follow these steps:
 git clone https://github.com/CESI-A3-Projet-AlgoAvan-C-Group/OptiFind.git
 ```
 
-### Requirements
+2. Go to the project root:
 
-To install the project, you need to have the following tools installed on your machine:
+```bash
+cd OptiFind
+```
 
-- [Python](https://www.python.org/downloads/)
-- [Pip](https://pypi.org/project/pip/)
-- [Flask](https://flask.palletsprojects.com/en/2.0.x/)
-
-You can install the required packages by running the following command:
+3. Install the required packages:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+4. You can now use the project.
 
 ## Usage
 
